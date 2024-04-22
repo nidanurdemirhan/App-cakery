@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "932674281920",
+    "project_id": "cakery-f6ecd",
+    "storage_bucket": "cakery-f6ecd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932674281920:android:2a4a07ab236fd595932825",
+        "android_client_info": {
+          "package_name": "com.nida.app_cakery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr-mL6--xiI68YyS9SMGIqj9yXaxPF9o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
