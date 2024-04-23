@@ -7,12 +7,8 @@ public class Ingredients {
     String alternative;
     String category;
 
-    public Ingredients(int ingredientID, String name, boolean isVegan, String alternative, String category) {
-        this.ingredientID = ingredientID;
+    public Ingredients(String name) {
         this.name = name;
-        this.isVegan = isVegan;
-        this.alternative = alternative;
-        this.category = category;
     }
 
     //getters
