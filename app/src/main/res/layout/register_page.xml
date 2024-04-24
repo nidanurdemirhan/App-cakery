@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:hint="Name"
             android:inputType="text" />
 
@@ -54,8 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:hint="Surname"
             android:inputType="text" />
 
@@ -87,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:hint="Email"
             android:inputType="text" />
 
@@ -119,10 +118,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-
-            android:layout_marginBottom="10dp"
-            android:autofillHints="isim"
-
+            android:layout_marginBottom="5dp"
+            android:autofillHints="Password"
             android:hint="Password"
             android:inputType="text" />
 
@@ -131,7 +128,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/layout_frame"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -153,8 +150,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="10dp"
-            android:autofillHints="isim"
+            android:layout_marginBottom="5dp"
+            android:autofillHints="Password"
             android:hint="Password Again"
             android:inputType="text" />
 
@@ -163,13 +160,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/layout_frame"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonsLayoutReg">
-
             <EditText
                 android:id="@+id/etPasswordReg2"
                 android:layout_width="match_parent"
@@ -180,13 +176,11 @@
                 android:hint="Password Again"
                 android:inputType="text" />
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/buttonsLayoutReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
             <Button
                 android:id="@+id/btnSignUpReg"
                 android:layout_width="wrap_content"
@@ -198,10 +192,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
