@@ -8,13 +8,12 @@
     <LinearLayout
         android:id="@+id/topBarHome"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:background="@color/black"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/textView"
@@ -29,9 +28,13 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:src="@tools:sample/avatars"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:src="@drawable/avatar_icon_png"
+        />
+
     </LinearLayout>
+
+
+
     <LinearLayout
         android:id="@+id/bottomBarHome"
         android:layout_width="match_parent"
@@ -82,4 +85,32 @@
             android:src="@drawable/list_icon_png"
             android:onClick="onButtonClick" />
     </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBarHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBarHome">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="CANIN NE ÇEKİYO TESTİ" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
