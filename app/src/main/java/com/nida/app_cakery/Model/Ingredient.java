@@ -1,13 +1,13 @@
 package com.nida.app_cakery.Model;
 
-public class Ingredients {
+public class Ingredient {
     String ingredientID;
     String name;
     boolean isVegan;
     String alternative;
     String category;
 
-    public Ingredients(String name) {
+    public Ingredient(String name) {
         this.name = name;
     }
 
