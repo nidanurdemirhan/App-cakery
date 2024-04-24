@@ -1,7 +1,7 @@
 package com.nida.app_cakery.Model;
 
 public class Ingredients {
-    int ingredientID;
+    String ingredientID;
     String name;
     boolean isVegan;
     String alternative;
@@ -12,7 +12,7 @@ public class Ingredients {
     }
 
     //getters
-    public int getIngredientID() {
+    public String getIngredientID() {
         return ingredientID;
     }
 
