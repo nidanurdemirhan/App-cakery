@@ -3,6 +3,7 @@ package com.nida.app_cakery;
 import static android.content.ContentValues.TAG;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -10,6 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -17,6 +19,8 @@ import com.nida.app_cakery.Model.Ingredient;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class CakeryDomain {
     FirebaseFirestore db;
@@ -102,6 +106,38 @@ public class CakeryDomain {
                     }
                 });
     }
+
+    public void fetchIngredientImage(String documentId, ImageView imageView) {
+        db.collection("Ingredient").document(documentId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String imageUrl = documentSnapshot.getString("url");
+                            if (imageUrl != null && !imageUrl.isEmpty()) {
+                                // Picasso, Glide gibi kütüphaneleri kullanarak URL'den resmi ekrana bastırabilirsiniz
+                                Picasso.get().load(imageUrl).into(imageView); // Burada imageView, resmin gösterileceği ImageView'i temsil eder
+                            } else {
+                                Log.d(TAG, "Image URL is empty or null.");
+                            }
+                        } else {
+                            Log.d(TAG, "Document does not exist.");
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Error fetching document: " + e.getMessage());
+                    }
+                });
+    }
+
+
+
+
+
 
 
 
