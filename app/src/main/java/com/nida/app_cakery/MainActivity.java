@@ -12,7 +12,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         CakeryDomain cd = new CakeryDomain();
-        cd.addIngredient();
-        cd.deleteIngredient();
+        //cd.addIngredient();
+        //cd.deleteIngredient();
+        cd.updateIngredient("5", "pineapple");
     }
 }

@@ -11,6 +11,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nida.app_cakery.Model.Ingredient;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CakeryDomain {
     FirebaseFirestore db;
     public CakeryDomain(){
@@ -53,6 +56,29 @@ public class CakeryDomain {
                     }
                 });
     }
+
+    public void updateIngredient(String documentId, String newName) {
+        // Create a Map to hold the new data
+        Map<String, Object> newData = new HashMap<>();
+        newData.put("name", newName);
+
+        // Update the document
+        db.collection("Ingredient").document(documentId)
+                .update(newData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+
 
 }
 
