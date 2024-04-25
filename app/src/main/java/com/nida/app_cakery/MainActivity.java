@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         CakeryDomain cd = new CakeryDomain();
         //cd.addIngredient();
         //cd.deleteIngredient();
-        cd.updateIngredient("5", "pineapple");
+        //cd.updateIngredient("5", "pineapple");
+        cd.readIngredients();
     }
 }
