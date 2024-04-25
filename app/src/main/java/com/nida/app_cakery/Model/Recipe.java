@@ -4,26 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
-    int recipeID;
+    String recipeID;
     String name;
     String description;
 
     List<IngredientInRecipe> ingredientsInRecipe = new ArrayList<>();
     double calorie;
     int portion;
-    boolean shared;
-    String owner; //system's recipe-> system, user's recipe -> user's mail
+    String status;
 
     //constructor
-    public Recipe(int recipeID, String name, String description, List<IngredientInRecipe> ingredientsInRecipe, double calorie, int portion, boolean shared, String owner) {
+    public Recipe(String recipeID, String name, String description, List<IngredientInRecipe> ingredientsInRecipe, double calorie, int portion, String status) {
         this.recipeID = recipeID;
         this.name = name;
         this.description = description;
         this.ingredientsInRecipe = ingredientsInRecipe;
         this.calorie = calorie;
         this.portion = portion;
-        this.shared = shared;
-        this.owner = owner;
+        this.status = status;
     }
 
     //setters
@@ -31,12 +29,12 @@ public class Recipe {
         this.portion = portion;
     }
 
-    public void setShared(boolean shared) {
-        this.shared = shared;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     //getters
-    public int getRecipeID() {
+    public String getRecipeID() {
         return recipeID;
     }
 
@@ -60,11 +58,8 @@ public class Recipe {
         return portion;
     }
 
-    public boolean isShared() {
-        return shared;
+    public String getStatus() {
+        return status;
     }
 
-    public String getOwner() {
-        return owner;
-    }
 }

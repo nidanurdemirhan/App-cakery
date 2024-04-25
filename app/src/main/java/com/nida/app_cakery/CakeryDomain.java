@@ -19,9 +19,9 @@ public class CakeryDomain {
 
     //write data:
     public void addIngredient(){
-        Ingredient ingredient = new Ingredient("banana");
+        Ingredient ingredient = new Ingredient("apple");
 
-        db.collection("Ingredient").document("3")
+        db.collection("Ingredient").document("5")
                 .set(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -36,5 +36,23 @@ public class CakeryDomain {
                     }
                 });
     }
+
+    public void deleteIngredient() {
+        db.collection("Ingredient").document("2")
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
 }
 

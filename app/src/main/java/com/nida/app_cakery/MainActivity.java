@@ -13,5 +13,6 @@ public class MainActivity extends AppCompatActivity {
 
         CakeryDomain cd = new CakeryDomain();
         cd.addIngredient();
+        cd.deleteIngredient();
     }
 }
