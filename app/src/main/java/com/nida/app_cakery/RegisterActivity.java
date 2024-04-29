@@ -1,6 +1,8 @@
 package com.nida.app_cakery;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -8,10 +10,6 @@ import android.widget.Toast;
 public class RegisterActivity extends MainActivity {
     private String emailAddress, password;
     private String name, surname;
-
-    public RegisterActivity() {
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +20,18 @@ public class RegisterActivity extends MainActivity {
         EditText etPasswordCheck = findViewById(R.id.etPasswordReg2);
         EditText etName = findViewById(R.id.etName);
         EditText etSurname = findViewById(R.id.etSurname);
-
         Button btnSignUp = findViewById(R.id.btnSignUpReg);
+        Button btnReturn = findViewById(R.id.btnLoginReg);
         btnSignUp.setOnClickListener(v -> {
             register(etEmail, etPassword, etPasswordCheck, etName, etSurname);
         });
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            }
+        });
+
     }
 
     private void register(EditText etEmail, EditText etPassword, EditText etPasswordCheck,

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends MainActivity {
 
     private String mailAddress;
     private String password;
@@ -23,15 +23,14 @@ public class LoginActivity extends AppCompatActivity {
         EditText etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
         Button btnSignUp = findViewById(R.id.btnSignup);
-
         btnLogin.setOnClickListener(v -> {
             login(etEmail, etPassword);
         });
-
-        btnSignUp.setOnClickListener(v -> {
-            setContentView(R.layout.register_page);
-            RegisterActivity regAc = new RegisterActivity();
-            regAc.onCreate(savedInstanceState);
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
         });
     }
 
