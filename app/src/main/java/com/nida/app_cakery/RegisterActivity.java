@@ -17,6 +17,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page);
+        registerActivity();
+    }
+
+    private void registerActivity() {
         EditText etEmail = findViewById(R.id.etEmailReg);
         EditText etPassword = findViewById(R.id.etPasswordReg);
         EditText etPasswordCheck = findViewById(R.id.etPasswordReg2);
@@ -33,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             }
         });
-
     }
 
     private void register(EditText etEmail, EditText etPassword, EditText etPasswordCheck,
@@ -54,5 +57,4 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

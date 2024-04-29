@@ -17,7 +17,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        loginActivity();
+    }
 
+    private void loginActivity() {
         EditText etEmail = findViewById(R.id.etMail);
         EditText etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
@@ -33,10 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login(EditText etEmail, EditText etPassword){
+    private void login(EditText etEmail, EditText etPassword){
         mailAddress = etEmail.getText().toString().trim();
         password =  etPassword.getText().toString().trim();
-
         if (mailAddress.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
         } else {
