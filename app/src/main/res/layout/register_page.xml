@@ -143,7 +143,7 @@
                 android:autofillHints="Password"
                 android:background="@drawable/edit_text"
                 android:hint="Password"
-                android:inputType="text" />
+                android:inputType="textPassword" />
         </LinearLayout>
         <TextView
             android:id="@+id/tvPasswordReg2"
@@ -174,7 +174,7 @@
                 android:autofillHints="Password"
                 android:background="@drawable/edit_text"
                 android:hint="Password Again"
-                android:inputType="text" />
+                android:inputType="textPassword" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/buttonsLayoutReg"
