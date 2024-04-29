@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegisterActivity extends MainActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class RegisterActivity extends AppCompatActivity {
     private String emailAddress, password;
     private String name, surname;
 

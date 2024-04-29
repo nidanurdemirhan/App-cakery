@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends MainActivity {
-
+public class LoginActivity extends AppCompatActivity {
     private String mailAddress;
     private String password;
 
