@@ -1,16 +1,14 @@
 package com.nida.app_cakery;
 
 public class IngredientInRecipe {
-
     private String recipeID;
-    private String ingredientID;
+    private Ingredient ingredient;
     private double amount;
     private String unit;
 
-    public IngredientInRecipe(String recipeID,
-                              String ingredientID, double amount, String unit) {
+    public IngredientInRecipe(String recipeID, Ingredient ingredient, double amount, String unit) {
         this.recipeID = recipeID;
-        this.ingredientID = ingredientID;
+        this.ingredient = ingredient;
         this.amount = amount;
         this.unit = unit;
     }
@@ -23,12 +21,12 @@ public class IngredientInRecipe {
         this.recipeID = recipeID;
     }
 
-    public String getIngredientID() {
-        return ingredientID;
+    public Ingredient getIngredient() {
+        return ingredient;
     }
 
-    public void setIngredientID(String ingredientID) {
-        this.ingredientID = ingredientID;
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     public double getAmount() {

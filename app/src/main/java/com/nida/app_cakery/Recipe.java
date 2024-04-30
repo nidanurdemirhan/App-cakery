@@ -15,12 +15,20 @@ public class Recipe {
         this.recipeID = recipeID;
         this.name = name;
         this.description = description;
-        //INGREDIENT İÇİN FİLL METHODU OLMASI GEREKMİYO MU
         this.calorie =calorie;
         this.portion = portion;
         this.isDefault = isDefault;
+        ArrayList<IngredientInRecipe> allIngredientInRecipe = new ArrayList<>();//BUNU PARAMETRE OLARAK VERİCEZ GLB HATA VERMESİN DİYE YAZDIM EMİN DEĞİLİM
+        fillIngredientList(allIngredientInRecipe);
     }
+    public void fillIngredientList(ArrayList<IngredientInRecipe> allIngredientInRecipe){
+       for(int i=0;i<allIngredientInRecipe.size();i++){
+           if(allIngredientInRecipe.get(i).getRecipeID().equals(this.recipeID)){
+               ingredientInRecipe.add(allIngredientInRecipe.get(i));
+           }
+       }
 
+    }
     public String getName() {
         return name;
     }
