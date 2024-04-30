@@ -82,7 +82,7 @@
                 android:autofillHints="Password"
                 android:background="@drawable/edit_text"
                 android:hint="Password"
-                android:inputType="text" />
+                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
