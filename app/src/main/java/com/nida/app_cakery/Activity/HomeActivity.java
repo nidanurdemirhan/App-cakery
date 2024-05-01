@@ -17,11 +17,11 @@ public class HomeActivity extends AppCompatActivity{
         homeActivity();
     }
     public void homeActivity(){
-        ImageButton btnCart = findViewById(R.id.btnCart1);
-        ImageButton btnFav = findViewById(R.id.btnFav1);
-        ImageButton btnHome = findViewById(R.id.btnHome1); //home'a tıklayınca bişi olmuyo onu değiştirebiliriz
-        ImageButton btnAdd = findViewById(R.id.btnAdd1);
-        ImageButton btnList = findViewById(R.id.btnList1);
+        ImageButton btnCart = findViewById(R.id.btnCart);
+        ImageButton btnFav = findViewById(R.id.btnFavorites);
+        ImageButton btnHome = findViewById(R.id.btnHome);
+        ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
+        ImageButton btnList = findViewById(R.id.btnAllRecipes);
 
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
