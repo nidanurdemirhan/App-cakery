@@ -1,4 +1,4 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.nida.app_cakery.MainActivity;
+import com.nida.app_cakery.R;
 
 public class RegisterActivity extends AppCompatActivity {
     private String emailAddress, password;

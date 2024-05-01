@@ -1,4 +1,4 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

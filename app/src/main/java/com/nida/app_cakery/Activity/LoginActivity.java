@@ -1,4 +1,4 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Activity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+import com.nida.app_cakery.R;
 
 public class LoginActivity extends AppCompatActivity {
     private String email;
