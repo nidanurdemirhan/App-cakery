@@ -6,7 +6,7 @@ public class Recipe {
     private String recipeID, name, description;
     private ArrayList<IngredientInRecipe> ingredientInRecipe;
     private double calorie;
-    private int portion;
+    private long portion;
     private boolean isDefault;
 
     public Recipe(String recipeID,String name, String description,

@@ -7,14 +7,24 @@ public class Ingredient {
     private String alternative;
     private String category;
 
+    private String url;
+
     public Ingredient(String ingredientID, String name,
-                      boolean isVegan, String alternative, String category) {
+                      boolean isVegan, String alternative, String category, String url) {
         this.ingredientID = ingredientID;
         this.name = name;
         this.isVegan = isVegan;
         this.alternative = alternative;
         this.category = category;
+        this.url = url;
     }
+
+    /*
+        public Ingredient(String name) {
+        this.name = name;
+    }
+
+     */
 
     public String getIngredientID() {
         return ingredientID;
@@ -55,4 +65,8 @@ public class Ingredient {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public String getUrl() { return url;}
+
+    public void setUrl(String url) { this.url = url;}
 }
