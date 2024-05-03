@@ -6,18 +6,18 @@ public class Recipe {
     private String recipeID, name, description;
     private ArrayList<IngredientInRecipe> ingredientInRecipe;
     private double calorie;
-    private long portion;
-    private boolean isDefault;
+    private long portion;      //Long yaptım çünkü firebase long kullanıyormuş sadece
+    private String status;    //DEĞİŞTİRDİM ÇÜNKÜ: default, shared, unshared şeklinde olmayacak mı?? sor kızlara değilse değiştir
 
     public Recipe(String recipeID,String name, String description,
                   ArrayList<IngredientInRecipe> ingredientInRecipe,
-                  double calorie, int portion, boolean isDefault){
+                  double calorie, Long portion, String status){
         this.recipeID = recipeID;
         this.name = name;
         this.description = description;
         this.calorie =calorie;
         this.portion = portion;
-        this.isDefault = isDefault;
+        this.status = status;
         ArrayList<IngredientInRecipe> allIngredientInRecipe = new ArrayList<>();//BUNU PARAMETRE OLARAK VERİCEZ GLB HATA VERMESİN DİYE YAZDIM EMİN DEĞİLİM
         fillIngredientList(allIngredientInRecipe);
     }
@@ -61,20 +61,20 @@ public class Recipe {
         this.calorie = calorie;
     }
 
-    public int getPortion() {
+    public Long getPortion() {
         return portion;
     }
 
-    public void setPortion(int portion) {
+    public void setPortion(Long portion) {
         this.portion = portion;
     }
 
-    public boolean isDefault() {
-        return isDefault;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getRecipeID() {

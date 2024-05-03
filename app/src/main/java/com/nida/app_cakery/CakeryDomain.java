@@ -17,19 +17,29 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CakeryDomain {
+    //ArrayList<IngredientInRecipe> ingredientInRecipe = new ArrayList<>();
     FirebaseFirestore db;
+    ArrayList<Recipe> recipeList = new ArrayList<>();
+    ArrayList<Ingredient> ingredientList = new ArrayList<>();
+
+    User user;
+
+
     public CakeryDomain(){
-        db = FirebaseFirestore.getInstance();
-    } //firebase connection
+        db = FirebaseFirestore.getInstance(); //firebase connection
+        readIngredients();
+        readRecipes();
+    }
 
 
-
-    public void ReadRecipes(){
-        db.collection("Recipes")
+    //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bunu bir araştır
+    private void readIngredients() {
+        db.collection("Ingredient")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -37,17 +47,16 @@ public class CakeryDomain {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
-
-
-                                String recipeID = document.getString("recipeID");
+                                String ingredientID = document.getId();
                                 String name = document.getString("name");
-                                String description = document.getString("description");
-                                double calorie = document.getDouble("calorie");
-                                long portion = document.getLong("portion");
-                                boolean isDefault = document.getBoolean("default");
+                                boolean isVegan = document.getBoolean("vegan");
+                                String alternative = document.getString("alternative");
+                                String category = document.getString("category");
 
-                                ReadIngredientInRecipe();
-                                
+                                String url = document.getString("url");
+                                Ingredient ingredient = new Ingredient(ingredientID, name, isVegan,alternative, category, url);
+
+                                ingredientList.add(ingredient);
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -56,8 +65,72 @@ public class CakeryDomain {
                 });
     }
 
-    private void ReadIngredientInRecipe() {
+    private void readRecipes(){
+        db.collection("Recipe")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String recipeID = document.getId();
+                                String name = document.getString("name");
+                                String description = document.getString("description");
+                                ArrayList<IngredientInRecipe> ingredientInRecipeList = new ArrayList<>();
+                                double calorie = document.getDouble("calorie");
+                                long portion = document.getLong("portion");
+                                String status = document.getString("status");
+
+
+                                Map<String, Object> ingredientsMap = (Map<String, Object>) document.getData().get("Ingredients");
+                                for (Map.Entry<String, Object> entry : ingredientsMap.entrySet()) {
+                                    String ingredientID = entry.getKey();
+                                    Map<String, Object> ingredientData = (Map<String, Object>) entry.getValue();
+
+                                    double amount = ((Number) ingredientData.get("amount")).doubleValue();
+
+                                    String unit = (String) ingredientData.get("unit");
+                                    Ingredient ingredient = null;
+                                    ingredient =  findIngredient(ingredientID);
+
+
+                                    IngredientInRecipe ingredientInRecipe = new IngredientInRecipe(recipeID, ingredient, amount, unit);
+                                    ingredientInRecipeList.add(ingredientInRecipe);
+
+
+
+
+                                }
+
+                                Recipe recipe = new Recipe(recipeID, name, description, ingredientInRecipeList, calorie, portion, status);
+
+                                if(status.equals("default")){
+                                    recipeList.add(recipe); //sadece defaultlar atılcakdı dimi!! kafam çok iyi şuan :)
+                                }
+
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
+
+
+    private Ingredient findIngredient(String ingredientID){
+        for(int i = 0; i < ingredientList.size(); i++){
+            Ingredient ingredient = ingredientList.get(i);
+            if(ingredient.getIngredientID().equals(ingredientID)) {
+                System.out.println(ingredient.getIngredientID());
+                System.out.println(ingredient.getName());
+                return ingredient;
+            }
+        }
+        return null;
+    }
+
+    /*****************************************************************************************************************************************************************************/
+
 
 
     //write data:
@@ -80,27 +153,6 @@ public class CakeryDomain {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error writing document", e);
-                    }
-                });
-    }
-
-    //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bun
-    public void readIngredients() {
-        db.collection("Ingredient")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Retrieve the data from the document
-                                String name = document.getString("name");
-                                // Print the data to the console
-                                System.out.println("Name: " + name);
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
                     }
                 });
     }
@@ -170,13 +222,4 @@ public class CakeryDomain {
                     }
                 });
     }
-
-
-
-
-
-
-
-
 }
-

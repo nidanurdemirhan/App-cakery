@@ -10,7 +10,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         CakeryDomain ck = new CakeryDomain();
-        ck.readIngredients();
 
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
