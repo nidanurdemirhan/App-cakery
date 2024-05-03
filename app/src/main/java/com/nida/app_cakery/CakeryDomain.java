@@ -22,17 +22,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CakeryDomain {
-    //ArrayList<IngredientInRecipe> ingredientInRecipe = new ArrayList<>();
-    FirebaseFirestore db;
-    ArrayList<Recipe> recipeList = new ArrayList<>();
-    ArrayList<Ingredient> ingredientList = new ArrayList<>();
+    private static volatile CakeryDomain shared;
 
-    User user;
+    //ArrayList<IngredientInRecipe> ingredientInRecipe = new ArrayList<>(); // IngredientInRecipe tablosu kaldırıldı bu yüzden gerekli değil. İlişkili ingredient ve miktarları Recipe tablosuna bakılarak dolduruluyor
+    private FirebaseFirestore db;
+    public ArrayList<Recipe> recipeList = new ArrayList<>();
+    public ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
+    public User user;
 
-    public CakeryDomain(){
-        db = FirebaseFirestore.getInstance(); //firebase connection
+    private CakeryDomain(User user){
+        this.user = user;
+        db = FirebaseFirestore.getInstance();
         readData();
+    }
+
+    public static CakeryDomain getInstance(User user){
+        CakeryDomain result = shared;
+        if (result == null) {
+            synchronized (CakeryDomain.class) { 
+                if (shared == null) {
+                    shared = new CakeryDomain(user);
+                }
+            }
+        }
+        return shared;
     }
 
     //asynchronous process
@@ -68,7 +82,7 @@ public class CakeryDomain {
                                 String ingredientID = document.getId();
                                 String name = document.getString("name");
                                 boolean isVegan = document.getBoolean("vegan");
-                                String alternative = document.getString("alternative");
+                                 String alternative = document.getString("alternative");
                                 String category = document.getString("category");
 
                                 String url = document.getString("url");
