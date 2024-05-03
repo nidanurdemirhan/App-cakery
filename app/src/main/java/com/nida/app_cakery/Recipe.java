@@ -18,8 +18,9 @@ public class Recipe {
         this.calorie =calorie;
         this.portion = portion;
         this.status = status;
-        ArrayList<IngredientInRecipe> allIngredientInRecipe = new ArrayList<>();//BUNU PARAMETRE OLARAK VERİCEZ GLB HATA VERMESİN DİYE YAZDIM EMİN DEĞİLİM
-        fillIngredientList(allIngredientInRecipe);
+        this.ingredientInRecipe = ingredientInRecipe;  //ADDED
+        //ArrayList<IngredientInRecipe> allIngredientInRecipe = new ArrayList<>();//BUNU PARAMETRE OLARAK VERİCEZ GLB HATA VERMESİN DİYE YAZDIM EMİN DEĞİLİM
+        //fillIngredientList(allIngredientInRecipe);
     }
     public void fillIngredientList(ArrayList<IngredientInRecipe> allIngredientInRecipe){
        for(int i=0;i<allIngredientInRecipe.size();i++){

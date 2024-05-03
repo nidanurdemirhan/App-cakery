@@ -32,13 +32,31 @@ public class CakeryDomain {
 
     public CakeryDomain(){
         db = FirebaseFirestore.getInstance(); //firebase connection
-        readIngredients();
-        readRecipes();
+        readData();
+    }
+
+    //asynchronous process
+    /*başka class observable olursa:
+            public void readData(final DataListener dataLoadListener)
+    */
+    public void readData() {
+        readIngredients(new DataListener() {
+            @Override
+            public void onDataReceived() {
+                readRecipes(new DataListener() {
+                    @Override
+                    public void onDataReceived() {
+                        //printResult();
+                        //**dataLoadListener.onDataReceived();  //pagelerin burayı dinlemesinde singlenton değilde observer deseni kullanılabilir mi? düşün
+                    }
+                });
+            }
+        });
     }
 
 
     //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bunu bir araştır
-    private void readIngredients() {
+    private void readIngredients(final DataListener datalistener) {
         db.collection("Ingredient")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -58,6 +76,7 @@ public class CakeryDomain {
 
                                 ingredientList.add(ingredient);
                             }
+                            datalistener.onDataReceived();
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -65,7 +84,7 @@ public class CakeryDomain {
                 });
     }
 
-    private void readRecipes(){
+    private void readRecipes(final DataListener datalistener){
         db.collection("Recipe")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -90,16 +109,10 @@ public class CakeryDomain {
                                     double amount = ((Number) ingredientData.get("amount")).doubleValue();
 
                                     String unit = (String) ingredientData.get("unit");
-                                    Ingredient ingredient = null;
-                                    ingredient =  findIngredient(ingredientID);
-
+                                    Ingredient ingredient = findIngredient(ingredientID);
 
                                     IngredientInRecipe ingredientInRecipe = new IngredientInRecipe(recipeID, ingredient, amount, unit);
                                     ingredientInRecipeList.add(ingredientInRecipe);
-
-
-
-
                                 }
 
                                 Recipe recipe = new Recipe(recipeID, name, description, ingredientInRecipeList, calorie, portion, status);
@@ -109,6 +122,8 @@ public class CakeryDomain {
                                 }
 
                             }
+                            datalistener.onDataReceived();
+
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -121,13 +136,53 @@ public class CakeryDomain {
         for(int i = 0; i < ingredientList.size(); i++){
             Ingredient ingredient = ingredientList.get(i);
             if(ingredient.getIngredientID().equals(ingredientID)) {
-                System.out.println(ingredient.getIngredientID());
-                System.out.println(ingredient.getName());
+                //System.out.println(ingredient.getIngredientID());
+                //System.out.println(ingredient.getName());
                 return ingredient;
             }
         }
         return null;
     }
+
+    private void printResult() {
+
+        System.out.println("SIZE: " + recipeList.size());
+        System.out.println("SIZE2: " + ingredientList.size());
+
+        System.out.println("*****************************************");
+
+
+        for (int i = 0; i < recipeList.size(); i++) {
+            Recipe recipe = recipeList.get(i);
+            System.out.println(recipe.getRecipeID());
+            System.out.println(recipe.getName());
+            System.out.println(recipe.getDescription());
+            System.out.println(recipe.getPortion().toString());
+            System.out.println(recipe.getStatus());
+            System.out.println(recipe.getCalorie());
+
+            for (int j = 0; j < recipe.getIngredientInRecipe().size(); j++) {
+                IngredientInRecipe ingredientInRecipe = recipe.getIngredientInRecipe().get(j);
+                System.out.println(ingredientInRecipe.getRecipeID());
+                System.out.println(ingredientInRecipe.getAmount());
+                System.out.println(ingredientInRecipe.getUnit());
+
+
+                //print ingredient:
+                Ingredient ingredient = ingredientInRecipe.getIngredient();
+                System.out.println(ingredient.getIngredientID());
+                System.out.println(ingredient.getName());
+                System.out.println(ingredient.isVegan());
+                System.out.println(ingredient.getAlternative());
+                System.out.println(ingredient.getCategory());
+                System.out.println(ingredient.getUrl());
+            }
+        }
+    }
+
+
+
+
 
     /*****************************************************************************************************************************************************************************/
 
