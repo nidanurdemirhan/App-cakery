@@ -22,31 +22,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CakeryDomain {
-    private static volatile CakeryDomain shared;
+    private static volatile CakeryDomain instance;
 
     //ArrayList<IngredientInRecipe> ingredientInRecipe = new ArrayList<>(); // IngredientInRecipe tablosu kaldırıldı bu yüzden gerekli değil. İlişkili ingredient ve miktarları Recipe tablosuna bakılarak dolduruluyor
     private FirebaseFirestore db;
     public ArrayList<Recipe> recipeList = new ArrayList<>();
     public ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
-    public User user;
+    private User user;
 
-    private CakeryDomain(User user){
-        this.user = user;
+    private CakeryDomain(){
         db = FirebaseFirestore.getInstance();
         readData();
     }
 
-    public static CakeryDomain getInstance(User user){
-        CakeryDomain result = shared;
+    public static CakeryDomain getInstance(){
+        CakeryDomain result = instance;
         if (result == null) {
-            synchronized (CakeryDomain.class) { 
-                if (shared == null) {
-                    shared = new CakeryDomain(user);
+            synchronized (CakeryDomain.class) {
+                if (instance == null) {
+                    instance = new CakeryDomain();
                 }
             }
         }
-        return shared;
+        return instance;
     }
 
     //asynchronous process
@@ -54,12 +53,12 @@ public class CakeryDomain {
             public void readData(final DataListener dataLoadListener)
     */
     public void readData() {
-        readIngredients(new DataListener() {
+        readIngredients(new FirebaseListener() {
             @Override
-            public void onDataReceived() {
-                readRecipes(new DataListener() {
+            public void onSuccess() {
+                readRecipes(new FirebaseListener() {
                     @Override
-                    public void onDataReceived() {
+                    public void onSuccess() {
                         //printResult();
                         //**dataLoadListener.onDataReceived();  //pagelerin burayı dinlemesinde singlenton değilde observer deseni kullanılabilir mi? düşün
                     }
@@ -70,7 +69,7 @@ public class CakeryDomain {
 
 
     //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bunu bir araştır
-    private void readIngredients(final DataListener datalistener) {
+    private void readIngredients(final FirebaseListener listener) {
         db.collection("Ingredient")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -90,7 +89,7 @@ public class CakeryDomain {
 
                                 ingredientList.add(ingredient);
                             }
-                            datalistener.onDataReceived();
+                            listener.onSuccess();
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -98,7 +97,7 @@ public class CakeryDomain {
                 });
     }
 
-    private void readRecipes(final DataListener datalistener){
+    private void readRecipes(final FirebaseListener listener){
         db.collection("Recipe")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -131,12 +130,10 @@ public class CakeryDomain {
 
                                 Recipe recipe = new Recipe(recipeID, name, description, ingredientInRecipeList, calorie, portion, status);
 
-                                if(status.equals("default")){
-                                    recipeList.add(recipe); //sadece defaultlar atılcakdı dimi!! kafam çok iyi şuan :)
-                                }
+                                recipeList.add(recipe); // save the all type recipes
 
                             }
-                            datalistener.onDataReceived();
+                            listener.onSuccess();
 
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -150,8 +147,6 @@ public class CakeryDomain {
         for(int i = 0; i < ingredientList.size(); i++){
             Ingredient ingredient = ingredientList.get(i);
             if(ingredient.getIngredientID().equals(ingredientID)) {
-                //System.out.println(ingredient.getIngredientID());
-                //System.out.println(ingredient.getName());
                 return ingredient;
             }
         }
@@ -160,11 +155,8 @@ public class CakeryDomain {
 
     private void printResult() {
 
-        System.out.println("SIZE: " + recipeList.size());
-        System.out.println("SIZE2: " + ingredientList.size());
-
-        System.out.println("*****************************************");
-
+        System.out.println("recipeList size: " + recipeList.size());
+        System.out.println("ingredientListSize: " + ingredientList.size());
 
         for (int i = 0; i < recipeList.size(); i++) {
             Recipe recipe = recipeList.get(i);
@@ -194,21 +186,52 @@ public class CakeryDomain {
         }
     }
 
+    /************************************************************* USER-FIREBASE PROCESSES ****************************************************************************/
 
+    public void fetchUser(String email, String password, FirebaseListener listener){
 
+        db.collection("User")
+                .whereEqualTo("mailAddress", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String mailAddress = document.getString("mailAddress");
+                                String name = document.getString("name");
+                                String surname = document.getString("surname");
+                                String password = document.getString("password");
 
+                                ArrayList<Object> myRecipesObjectList = (ArrayList<Object>) document.get("myRecipes");
+                                ArrayList<String> myRecipesData = new ArrayList<>();
+                                for (Object recipe : myRecipesObjectList) {
+                                    myRecipesData.add(recipe.toString());
+                                }
 
-    /*****************************************************************************************************************************************************************************/
+                                ArrayList<Object> favoriteRecipesObjectList = (ArrayList<Object>) document.get("favoriteRecipes");
+                                ArrayList<String> favoriteRecipesData = new ArrayList<>();
+                                for (Object recipe : myRecipesObjectList) {
+                                    favoriteRecipesObjectList.add(recipe.toString());
+                                }
 
+                                user = new User(mailAddress, name, surname, password, recipeList, myRecipesData, favoriteRecipesData);
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                listener.onSuccess();
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
-
-    //write data:
-    public void addIngredient(){
-        Ingredient ingredient89 = new Ingredient("11", "carrot", true, "", "vegetables", "https://cdn11.bigcommerce.com/s-kc25pb94dz/images/stencil/1280x1280/products/271/762/Carrot__40927.1634584458.jpg?c=2");
-        addToFirebase("Ingredient", "89", ingredient89);
     }
 
-    public void addToFirebase(String collectionpath, String documentPath, Object object){
+
+
+    /******************************************************* FOR ALL OBJECTS ********************************************************************************************/
+
+    public void saveObject(String collectionpath, String documentPath, Object object, FirebaseListener listener){
 
         db.collection(collectionpath).document(documentPath)
                 .set(object)
@@ -216,6 +239,7 @@ public class CakeryDomain {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
+                        listener.onSuccess();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -225,7 +249,7 @@ public class CakeryDomain {
                     }
                 });
     }
-
+/***************************************************************************************************************************************************************************/
     public void deleteIngredient() {
         db.collection("Ingredient").document("2")
                 .delete()
@@ -290,5 +314,13 @@ public class CakeryDomain {
                         Log.e(TAG, "Error fetching document: " + e.getMessage());
                     }
                 });
+    }
+    /******************************************************************* GETTER-SETTER *********************************************************************/
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

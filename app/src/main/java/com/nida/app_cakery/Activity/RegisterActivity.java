@@ -18,8 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nida.app_cakery.CakeryDomain;
+import com.nida.app_cakery.FirebaseListener;
 import com.nida.app_cakery.MainActivity;
 import com.nida.app_cakery.R;
+import com.nida.app_cakery.User;
+
+import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
     private String emailAddress, password;
@@ -81,8 +86,16 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                            //updateUI(user);
+
+                            User newUser = new User(emailAddress, name, surname, password);
+                            CakeryDomain.getInstance().saveObject("User", UUID.randomUUID().toString(), newUser, new FirebaseListener() {
+                                @Override
+                                public void onSuccess() {
+                                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                                    //updateUI(user);
+                                }
+                            });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());

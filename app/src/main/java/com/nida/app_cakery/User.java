@@ -5,12 +5,18 @@ import java.util.ArrayList;
 public class User extends Person{
     private ArrayList<Recipe> myRecipes;
     private ArrayList<Recipe> favoriteRecipes;
-    public User(String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes) {
+    public User(String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData) {
         super(mailAddress, name, surname, password);
-        ArrayList<String> myRecipesData = new ArrayList<>(); //BURDAKİ LİSTE DATABASEDEN ALINACAK
-        ArrayList<String> favoriteRecipesData = new ArrayList<>();  //BURDAKİ LİSTE DE DATABASEDEN ALINACAK
+        //databaseden geliceği iççin silinecek
+        //ArrayList<String> myRecipesData = new ArrayList<>(); //BURDAKİ LİSTE DATABASEDEN ALINACAK
+        //ArrayList<String> favoriteRecipesData = new ArrayList<>();  //BURDAKİ LİSTE DE DATABASEDEN ALINACAK
         fillRecipeLists(allRecipes,myRecipesData,favoriteRecipesData);
     }
+
+    public User(String mailAddress, String name, String surname, String password ) { //Registration
+        super(mailAddress, name, surname, password);
+    }
+
     public void fillRecipeLists(ArrayList<Recipe> allRecipes, ArrayList<String> favoriteList, ArrayList<String> myRecipesList){ //BURDA DEĞİŞİKLİK VAAR
         for(int i=0;i<allRecipes.size();i++){
             if(myRecipesList.contains(allRecipes.get(i).getRecipeID())){

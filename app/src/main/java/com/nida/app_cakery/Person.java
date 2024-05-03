@@ -4,7 +4,7 @@ public abstract class Person {
     private String mailAddress;
     private String name;
     private String surname;
-    private String password;
+    private String password;    //BENCE PASSWORD KAYDEDİLMEMELİ, GÜVENLİK NEDENİYLE VE İHTİYACIMIZ YOK!!
 
     public Person(String mailAddress,String name, String surname, String password){
         this.mailAddress=mailAddress;
