@@ -3,8 +3,8 @@ package com.nida.app_cakery;
 import java.util.ArrayList;
 
 public class User extends Person{
-    private ArrayList<Recipe> myRecipes;
-    private ArrayList<Recipe> favoriteRecipes;
+    private ArrayList<Recipe> myRecipes = new ArrayList<>();
+    private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
     public User(String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData) {
         super(mailAddress, name, surname, password);
         //databaseden geliceği iççin silinecek

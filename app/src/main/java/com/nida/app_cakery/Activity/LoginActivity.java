@@ -67,11 +67,22 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
 
-                                CakeryDomain.getInstance().fetchUser(email, password, new FirebaseListener() {
+                                CakeryDomain.getInstance().readIngredients(new FirebaseListener() {
                                     @Override
                                     public void onSuccess() {
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                        //updateUI(user);
+                                        CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
+                                            @Override
+                                            public void onSuccess() {
+                                                CakeryDomain.getInstance().fetchUser(email, password, new FirebaseListener() {
+                                                    @Override
+                                                    public void onSuccess() {
+                                                        CakeryDomain cakeryDomain = CakeryDomain.getInstance();
+                                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                                        //updateUI(user);
+                                                    }
+                                                });
+                                            }
+                                        });
                                     }
                                 });
                             } else {

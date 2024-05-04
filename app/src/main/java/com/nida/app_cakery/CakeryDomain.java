@@ -33,7 +33,6 @@ public class CakeryDomain {
 
     private CakeryDomain(){
         db = FirebaseFirestore.getInstance();
-        readData();
     }
 
     public static CakeryDomain getInstance(){
@@ -48,28 +47,9 @@ public class CakeryDomain {
         return instance;
     }
 
-    //asynchronous process
-    /*başka class observable olursa:
-            public void readData(final DataListener dataLoadListener)
-    */
-    public void readData() {
-        readIngredients(new FirebaseListener() {
-            @Override
-            public void onSuccess() {
-                readRecipes(new FirebaseListener() {
-                    @Override
-                    public void onSuccess() {
-                        //printResult();
-                        //**dataLoadListener.onDataReceived();  //pagelerin burayı dinlemesinde singlenton değilde observer deseni kullanılabilir mi? düşün
-                    }
-                });
-            }
-        });
-    }
-
 
     //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bunu bir araştır
-    private void readIngredients(final FirebaseListener listener) {
+    public void readIngredients(final FirebaseListener listener) {
         db.collection("Ingredient")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -97,7 +77,7 @@ public class CakeryDomain {
                 });
     }
 
-    private void readRecipes(final FirebaseListener listener){
+    public void readRecipes(final FirebaseListener listener){
         db.collection("Recipe")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -153,42 +133,9 @@ public class CakeryDomain {
         return null;
     }
 
-    private void printResult() {
-
-        System.out.println("recipeList size: " + recipeList.size());
-        System.out.println("ingredientListSize: " + ingredientList.size());
-
-        for (int i = 0; i < recipeList.size(); i++) {
-            Recipe recipe = recipeList.get(i);
-            System.out.println(recipe.getRecipeID());
-            System.out.println(recipe.getName());
-            System.out.println(recipe.getDescription());
-            System.out.println(recipe.getPortion().toString());
-            System.out.println(recipe.getStatus());
-            System.out.println(recipe.getCalorie());
-
-            for (int j = 0; j < recipe.getIngredientInRecipe().size(); j++) {
-                IngredientInRecipe ingredientInRecipe = recipe.getIngredientInRecipe().get(j);
-                System.out.println(ingredientInRecipe.getRecipeID());
-                System.out.println(ingredientInRecipe.getAmount());
-                System.out.println(ingredientInRecipe.getUnit());
-
-
-                //print ingredient:
-                Ingredient ingredient = ingredientInRecipe.getIngredient();
-                System.out.println(ingredient.getIngredientID());
-                System.out.println(ingredient.getName());
-                System.out.println(ingredient.isVegan());
-                System.out.println(ingredient.getAlternative());
-                System.out.println(ingredient.getCategory());
-                System.out.println(ingredient.getUrl());
-            }
-        }
-    }
-
     /************************************************************* USER-FIREBASE PROCESSES ****************************************************************************/
 
-    public void fetchUser(String email, String password, FirebaseListener listener){
+    public void fetchUser(String email, String password, FirebaseListener listener){ //pasword alınmamalı firebaseden çekilöeli: güvenlik
 
         db.collection("User")
                 .whereEqualTo("mailAddress", email)
@@ -203,21 +150,23 @@ public class CakeryDomain {
                                 String surname = document.getString("surname");
                                 String password = document.getString("password");
 
-                                ArrayList<Object> myRecipesObjectList = (ArrayList<Object>) document.get("myRecipes");
                                 ArrayList<String> myRecipesData = new ArrayList<>();
+                                ArrayList<String> favoriteRecipesData = new ArrayList<>();
+
+                                ArrayList<Object> myRecipesObjectList = (ArrayList<Object>) document.get("myRecipes");
                                 for (Object recipe : myRecipesObjectList) {
                                     myRecipesData.add(recipe.toString());
                                 }
 
                                 ArrayList<Object> favoriteRecipesObjectList = (ArrayList<Object>) document.get("favoriteRecipes");
-                                ArrayList<String> favoriteRecipesData = new ArrayList<>();
-                                for (Object recipe : myRecipesObjectList) {
-                                    favoriteRecipesObjectList.add(recipe.toString());
+                                for (Object recipe : favoriteRecipesObjectList) {
+                                    favoriteRecipesData.add(recipe.toString());
                                 }
 
-                                user = new User(mailAddress, name, surname, password, recipeList, myRecipesData, favoriteRecipesData);
+                                user = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 listener.onSuccess();
+
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -226,7 +175,6 @@ public class CakeryDomain {
                 });
 
     }
-
 
 
     /******************************************************* FOR ALL OBJECTS ********************************************************************************************/
@@ -322,5 +270,21 @@ public class CakeryDomain {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ArrayList<Recipe> getRecipeList() {
+        return recipeList;
+    }
+
+    public void setRecipeList(ArrayList<Recipe> recipeList) {
+        this.recipeList = recipeList;
+    }
+
+    public ArrayList<Ingredient> getIngredientList() {
+        return ingredientList;
+    }
+
+    public void setIngredientList(ArrayList<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
     }
 }

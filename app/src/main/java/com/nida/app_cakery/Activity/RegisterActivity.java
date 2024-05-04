@@ -87,12 +87,23 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            User newUser = new User(emailAddress, name, surname, password);
-                            CakeryDomain.getInstance().saveObject("User", UUID.randomUUID().toString(), newUser, new FirebaseListener() {
+                            CakeryDomain.getInstance().readIngredients(new FirebaseListener() {
                                 @Override
                                 public void onSuccess() {
-                                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                                    //updateUI(user);
+                                    CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
+                                        @Override
+                                        public void onSuccess() {
+                                            User newUser = new User(emailAddress, name, surname, password);
+                                            CakeryDomain.getInstance().setUser(newUser);
+                                            CakeryDomain.getInstance().saveObject("User", UUID.randomUUID().toString(), newUser, new FirebaseListener() {
+                                                @Override
+                                                public void onSuccess() {
+                                                    startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                                                    //updateUI(user);
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             });
 
