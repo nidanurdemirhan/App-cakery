@@ -1,8 +1,7 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import com.nida.app_cakery.Activity.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     @Override

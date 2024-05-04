@@ -18,11 +18,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.nida.app_cakery.CakeryDomain;
-import com.nida.app_cakery.FirebaseListener;
-import com.nida.app_cakery.MainActivity;
+import com.nida.app_cakery.Model.CakeryDomain;
+import com.nida.app_cakery.Model.FirebaseListener;
 import com.nida.app_cakery.R;
-import com.nida.app_cakery.User;
+import com.nida.app_cakery.Model.User;
 
 import java.util.UUID;
 
@@ -89,15 +88,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                             CakeryDomain.getInstance().readIngredients(new FirebaseListener() {
                                 @Override
-                                public void onSuccess() {
+                                public void onTaskCompleted() {
                                     CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
                                         @Override
-                                        public void onSuccess() {
+                                        public void onTaskCompleted() {
                                             User newUser = new User(emailAddress, name, surname, password);
                                             CakeryDomain.getInstance().setUser(newUser);
                                             CakeryDomain.getInstance().saveObject("User", UUID.randomUUID().toString(), newUser, new FirebaseListener() {
                                                 @Override
-                                                public void onSuccess() {
+                                                public void onTaskCompleted() {
                                                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                                                     //updateUI(user);
                                                 }

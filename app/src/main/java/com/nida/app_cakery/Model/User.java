@@ -1,8 +1,8 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Model;
 
 import java.util.ArrayList;
 
-public class User extends Person{
+public class User extends Person {
     private ArrayList<Recipe> myRecipes = new ArrayList<>();
     private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
     public User(String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData) {

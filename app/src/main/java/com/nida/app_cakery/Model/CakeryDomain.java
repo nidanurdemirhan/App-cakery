@@ -1,4 +1,4 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Model;
 
 import static android.content.ContentValues.TAG;
 
@@ -69,7 +69,7 @@ public class CakeryDomain {
 
                                 ingredientList.add(ingredient);
                             }
-                            listener.onSuccess();
+                            listener.onTaskCompleted();
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -113,7 +113,7 @@ public class CakeryDomain {
                                 recipeList.add(recipe); // save the all type recipes
 
                             }
-                            listener.onSuccess();
+                            listener.onTaskCompleted();
 
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -165,7 +165,7 @@ public class CakeryDomain {
 
                                 user = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                listener.onSuccess();
+                                listener.onTaskCompleted();
 
                             }
                         } else {
@@ -187,7 +187,7 @@ public class CakeryDomain {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully written!");
-                        listener.onSuccess();
+                        listener.onTaskCompleted();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

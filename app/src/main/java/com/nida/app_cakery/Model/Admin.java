@@ -1,8 +1,8 @@
-package com.nida.app_cakery;
+package com.nida.app_cakery.Model;
 
 import java.util.ArrayList;
 
-public class Admin extends Person{
+public class Admin extends Person {
     private ArrayList<Recipe> requestList;
     public Admin(String mailAddress, String name, String surname, String password) {
         super(mailAddress, name, surname, password);
