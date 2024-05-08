@@ -198,6 +198,7 @@ public class CakeryDomain {
                 });
     }
 /***************************************************************************************************************************************************************************/
+
     public void deleteIngredient() {
         db.collection("Ingredient").document("2")
                 .delete()
@@ -213,6 +214,31 @@ public class CakeryDomain {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
+    }
+
+    public void addRecipe(Recipe recipe) {
+
+        Map<String, Object> recipeData = new HashMap<>();
+        recipeData.put("recipeID", recipe.getRecipeID());
+        recipeData.put("name", recipe.getName());
+        recipeData.put("description", recipe.getDescription());
+        recipeData.put("calorie", recipe.getCalorie());
+        recipeData.put("portion", recipe.getPortion());
+        recipeData.put("status", recipe.getStatus());
+
+        Map<String, Map<String, Object>> ingredientsMap = new HashMap<>();
+        for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipe()) {
+            Map<String, Object> ingredientData = new HashMap<>();
+            ingredientData.put("amount", ingredientInRecipe.getAmount());
+            ingredientData.put("unit", ingredientInRecipe.getUnit());
+            ingredientsMap.put(ingredientInRecipe.getIngredientID(), ingredientData);
+        }
+        recipeData.put("ingredientsInRecipe", ingredientsMap);
+
+        db.collection("Recipe").document(recipe.getRecipeID()).set(recipeData)
+                .addOnSuccessListener(documentReference -> Log.d(TAG, "Recipe added successfully"))
+                .addOnFailureListener(e -> Log.w(TAG, "Error adding recipe: " + e.getMessage()));
+        
     }
 
     public void updateIngredient(String documentId, String newName) {

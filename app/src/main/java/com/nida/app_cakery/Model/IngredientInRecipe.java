@@ -27,6 +27,8 @@ public class IngredientInRecipe {
         return ingredient;
     }
 
+    public String getIngredientID(){ return ingredient.getIngredientID(); }
+
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
     }
