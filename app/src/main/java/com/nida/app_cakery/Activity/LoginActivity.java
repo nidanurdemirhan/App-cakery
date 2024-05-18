@@ -18,8 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.nida.app_cakery.Model.CakeryDomain;
-import com.nida.app_cakery.Model.FirebaseListener;
+import com.nida.app_cakery.Domain.CakeryDomain;
+import com.nida.app_cakery.Listeners.FirebaseListener;
 import com.nida.app_cakery.R;
 
 public class LoginActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.nida.app_cakery.Model;
+package com.nida.app_cakery.Domain;
 
 import static android.content.ContentValues.TAG;
 
@@ -15,6 +15,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.nida.app_cakery.Listeners.FirebaseListener;
+import com.nida.app_cakery.Model.Ingredient;
+import com.nida.app_cakery.Model.IngredientInRecipe;
+import com.nida.app_cakery.Model.Recipe;
+import com.nida.app_cakery.Model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -93,6 +98,8 @@ public class CakeryDomain {
                                 long portion = document.getLong("portion");
                                 String status = document.getString("status");
 
+                                // URL'leri okuma
+                                String imageUrl = document.getString("url");
 
                                 Map<String, Object> ingredientsMap = (Map<String, Object>) document.getData().get("Ingredients");
                                 for (Map.Entry<String, Object> entry : ingredientsMap.entrySet()) {
@@ -100,7 +107,6 @@ public class CakeryDomain {
                                     Map<String, Object> ingredientData = (Map<String, Object>) entry.getValue();
 
                                     double amount = ((Number) ingredientData.get("amount")).doubleValue();
-
                                     String unit = (String) ingredientData.get("unit");
                                     Ingredient ingredient = findIngredient(ingredientID);
 
@@ -108,10 +114,12 @@ public class CakeryDomain {
                                     ingredientInRecipeList.add(ingredientInRecipe);
                                 }
 
-                                Recipe recipe = new Recipe(recipeID, name, description, ingredientInRecipeList, calorie, portion, status);
+                                Recipe recipe = new Recipe(recipeID, name, description, ingredientInRecipeList, calorie, portion, status, imageUrl);
 
-                                recipeList.add(recipe); // save the all type recipes
+                                // URL'leri Recipe nesnesine ekleme
+                                recipe.setImageUrl(imageUrl);
 
+                                recipeList.add(recipe);
                             }
                             listener.onTaskCompleted();
 

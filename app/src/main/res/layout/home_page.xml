@@ -25,6 +25,7 @@
                 android:layout_margin="15dp"
                 android:text="CANIN NE ÇEKİYO TESTİ" />
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

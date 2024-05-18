@@ -11,9 +11,10 @@ public class Recipe {
     private long portion;      //Long yaptım çünkü firebase long kullanıyormuş sadece
     private String status;    //DEĞİŞTİRDİM ÇÜNKÜ: default, shared, unshared şeklinde olmayacak mı?? sor kızlara değilse değiştir
 
+    private String imageUrl;
     public Recipe(String recipeID,String name, String description,
                   ArrayList<IngredientInRecipe> ingredientInRecipe,
-                  double calorie, Long portion, String status){
+                  double calorie, Long portion, String status, String imageUrl){
         this.recipeID = recipeID;
         this.name = name;
         this.description = description;
@@ -21,6 +22,7 @@ public class Recipe {
         this.portion = portion;
         this.status = status;
         this.ingredientInRecipe = ingredientInRecipe;  //ADDED
+        this.imageUrl = imageUrl;
         //ArrayList<IngredientInRecipe> allIngredientInRecipe = new ArrayList<>();//BUNU PARAMETRE OLARAK VERİCEZ GLB HATA VERMESİN DİYE YAZDIM EMİN DEĞİLİM
         //fillIngredientList(allIngredientInRecipe);
     }
@@ -86,5 +88,13 @@ public class Recipe {
 
     public void setRecipeID(String recipeID) {
         this.recipeID = recipeID;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
