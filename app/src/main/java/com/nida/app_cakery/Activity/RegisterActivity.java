@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Listeners.FirebaseListener;
 import com.nida.app_cakery.R;
-import com.nida.app_cakery.Model.User;
+import com.nida.app_cakery.Models.User;
 
 import java.util.UUID;
 

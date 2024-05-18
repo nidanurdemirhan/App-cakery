@@ -16,10 +16,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.nida.app_cakery.Listeners.FirebaseListener;
-import com.nida.app_cakery.Model.Ingredient;
-import com.nida.app_cakery.Model.IngredientInRecipe;
-import com.nida.app_cakery.Model.Recipe;
-import com.nida.app_cakery.Model.User;
+import com.nida.app_cakery.Models.Ingredient;
+import com.nida.app_cakery.Models.IngredientInRecipe;
+import com.nida.app_cakery.Models.Recipe;
+import com.nida.app_cakery.Models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

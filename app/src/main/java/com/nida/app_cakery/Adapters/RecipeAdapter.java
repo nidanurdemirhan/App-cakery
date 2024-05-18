@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.nida.app_cakery.Model.Recipe;
+import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
 
 import java.util.ArrayList;

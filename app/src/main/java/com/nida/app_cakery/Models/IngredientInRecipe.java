@@ -1,6 +1,4 @@
-package com.nida.app_cakery.Model;
-
-import com.nida.app_cakery.Model.Ingredient;
+package com.nida.app_cakery.Models;
 
 public class IngredientInRecipe {
     private String recipeID;

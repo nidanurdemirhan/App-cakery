@@ -1,4 +1,4 @@
-package com.nida.app_cakery.Model;
+package com.nida.app_cakery.Models;
 
 public class Ingredient {
     private String ingredientID;

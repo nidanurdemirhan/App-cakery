@@ -1,4 +1,4 @@
-package com.nida.app_cakery.Model;
+package com.nida.app_cakery.Models;
 
 public abstract class Person {
     private String mailAddress;

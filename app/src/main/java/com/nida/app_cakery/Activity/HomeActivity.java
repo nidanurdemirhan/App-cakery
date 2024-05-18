@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nida.app_cakery.Model.Recipe;
+import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Listeners.FirebaseListener;

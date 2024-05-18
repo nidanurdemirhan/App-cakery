@@ -1,6 +1,4 @@
-package com.nida.app_cakery.Model;
-
-import com.nida.app_cakery.Model.IngredientInRecipe;
+package com.nida.app_cakery.Models;
 
 import java.util.ArrayList;
 
