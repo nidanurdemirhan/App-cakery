@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nida.app_cakery.Model.Recipe;
 import com.nida.app_cakery.R;
 
@@ -37,6 +39,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.recipeName.setText(recipe.getName());
         holder.recipeCalories.setText("Kalori: " + recipe.getCalorie());
         holder.recipePortion.setText("Porsiyon: " + recipe.getPortion());
+
+        Glide.with(context)
+                .load(recipe.getImageUrl())
+                .into(holder.recipeImage);
     }
 
     @Override
@@ -45,13 +51,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
-        TextView recipeName, recipeCalories, recipePortion;
+        TextView recipeName, recipeDescription, recipeCalories, recipePortion;
+        ImageView recipeImage;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipe_name);
             recipeCalories = itemView.findViewById(R.id.recipe_calories);
             recipePortion = itemView.findViewById(R.id.recipe_portion);
+            recipeImage = itemView.findViewById(R.id.recipe_image);
         }
     }
 }
