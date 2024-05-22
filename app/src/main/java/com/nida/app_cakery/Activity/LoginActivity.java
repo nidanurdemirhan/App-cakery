@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Listeners.FirebaseListener;
+import com.nida.app_cakery.Models.Admin;
 import com.nida.app_cakery.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -73,12 +74,17 @@ public class LoginActivity extends AppCompatActivity {
                                         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
                                             @Override
                                             public void onTaskCompleted() {
-                                                CakeryDomain.getInstance().fetchUser(email, password, new FirebaseListener() {
+                                                CakeryDomain.getInstance().fetchPerson(email, password, new FirebaseListener() {
                                                     @Override
                                                     public void onTaskCompleted() {
                                                         CakeryDomain cakeryDomain = CakeryDomain.getInstance();
-                                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                                        //updateUI(user);
+
+                                                        if (CakeryDomain.getInstance().getPerson() instanceof Admin){
+                                                            startActivity(new Intent(LoginActivity.this, RegisterActivity.class)); //BU DEĞİŞECEK SADECE DENEME AMAÇLI
+                                                        }else {
+                                                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                                            //updateUI(user);
+                                                        }
                                                     }
                                                 });
                                             }

@@ -16,8 +16,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.nida.app_cakery.Listeners.FirebaseListener;
+import com.nida.app_cakery.Models.Admin;
 import com.nida.app_cakery.Models.Ingredient;
 import com.nida.app_cakery.Models.IngredientInRecipe;
+import com.nida.app_cakery.Models.Person;
 import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.Models.User;
 import com.squareup.picasso.Picasso;
@@ -34,7 +36,7 @@ public class CakeryDomain {
     public ArrayList<Recipe> recipeList = new ArrayList<>();
     public ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
-    private User user;
+    private Person person;
 
     private CakeryDomain(){
         db = FirebaseFirestore.getInstance();
@@ -51,7 +53,6 @@ public class CakeryDomain {
         }
         return instance;
     }
-
 
     //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bunu bir araştır
     public void readIngredients(final FirebaseListener listener) {
@@ -143,8 +144,43 @@ public class CakeryDomain {
 
     /************************************************************* USER-FIREBASE PROCESSES ****************************************************************************/
 
-    public void fetchUser(String email, String password, FirebaseListener listener){ //pasword alınmamalı firebaseden çekilöeli: güvenlik
+    public void fetchPerson(String email, String password, FirebaseListener listener) {
+        db.collection("Admin")
+                .whereEqualTo("mailAddress", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String mailAddress = document.getString("mailAddress");
+                                    String name = document.getString("name");
+                                    String surname = document.getString("surname");
+                                    String password = document.getString("password");
 
+                                    ArrayList<String> requestListData = new ArrayList<>();
+
+                                    ArrayList<Object> favoriteRecipesObjectList = (ArrayList<Object>) document.get("requestList");
+                                    for (Object recipe : favoriteRecipesObjectList) {
+                                        requestListData.add(recipe.toString());
+                                    }
+
+                                    person = new Admin(mailAddress, name, surname, password, requestListData);
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    listener.onTaskCompleted();
+
+                                }
+                            }else{
+                                fetchUser(email, password, listener);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    private void fetchUser(String email, String password, FirebaseListener listener){ //pasword alınmamalı firebaseden çekilöeli: güvenlik
         db.collection("User")
                 .whereEqualTo("mailAddress", email)
                 .get()
@@ -171,19 +207,19 @@ public class CakeryDomain {
                                     favoriteRecipesData.add(recipe.toString());
                                 }
 
-                                user = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData);
+                                person = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 listener.onTaskCompleted();
 
                             }
                         } else {
+                            Log.d(TAG, "There is any person in the system.", task.getException());
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
 
     }
-
 
     /******************************************************* FOR ALL OBJECTS ********************************************************************************************/
 
@@ -298,12 +334,12 @@ public class CakeryDomain {
                 });
     }
     /******************************************************************* GETTER-SETTER *********************************************************************/
-    public User getUser() {
-        return user;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPerson(User person) {
+        this.person = person;
     }
 
     public ArrayList<Recipe> getRecipeList() {

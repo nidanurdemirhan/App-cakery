@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         @Override
                                         public void onTaskCompleted() {
                                             User newUser = new User(emailAddress, name, surname, password);
-                                            CakeryDomain.getInstance().setUser(newUser);
+                                            CakeryDomain.getInstance().setPerson(newUser);
                                             CakeryDomain.getInstance().saveObject("User", UUID.randomUUID().toString(), newUser, new FirebaseListener() {
                                                 @Override
                                                 public void onTaskCompleted() {
