@@ -1,6 +1,7 @@
 package com.nida.app_cakery.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.nida.app_cakery.Activity.RecipeDetailActivity;
 import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
 
@@ -43,6 +45,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Glide.with(context)
                 .load(recipe.getImageUrl())
                 .into(holder.recipeImage);
+
+        //////////////////////////////////////////
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RecipeDetailActivity.class);
+                intent.putExtra("recipeID", recipe.getRecipeID());
+                context.startActivity(intent);
+            }
+        });
+        /////////////////////////////////////////////
     }
 
     @Override
