@@ -71,6 +71,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Home butonu zaten HomeActivity'de olduğu için işlem yapmayabiliriz
+            }
+        });
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
