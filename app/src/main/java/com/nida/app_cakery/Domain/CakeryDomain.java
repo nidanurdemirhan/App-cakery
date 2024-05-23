@@ -155,6 +155,7 @@ public class CakeryDomain {
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String personID = document.getId();
                                     String mailAddress = document.getString("mailAddress");
                                     String name = document.getString("name");
                                     String surname = document.getString("surname");
@@ -167,7 +168,7 @@ public class CakeryDomain {
                                         requestListData.add(recipe.toString());
                                     }
 
-                                    person = new Admin(mailAddress, name, surname, password, requestListData);
+                                    person = new Admin(personID, mailAddress, name, surname, password, requestListData);
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     listener.onTaskCompleted();
 
@@ -190,6 +191,7 @@ public class CakeryDomain {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                String personID = document.getId();
                                 String mailAddress = document.getString("mailAddress");
                                 String name = document.getString("name");
                                 String surname = document.getString("surname");
@@ -210,7 +212,7 @@ public class CakeryDomain {
 
                                 ArrayList<String> ingredientsInInventory = (ArrayList<String>) document.get("ingredientsInInventory");
 
-                                person = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData, ingredientsInInventory);
+                                person = new User(personID,mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData, ingredientsInInventory);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 listener.onTaskCompleted();
 
@@ -336,6 +338,29 @@ public class CakeryDomain {
                     }
                 });
     }
+
+    public void updateIngredientsInInventory(ArrayList<String> newIngrediensInInventory) {
+
+        db.collection("User").document(person.getPersonID())
+                .update("ingredientsInInventory", newIngrediensInInventory)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+
+    public void addIngredientsInInventory(){
+
+    }
+
     /******************************************************************* GETTER-SETTER *********************************************************************/
     public Person getPerson() {
         return person;

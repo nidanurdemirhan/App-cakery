@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Admin extends Person {
     private ArrayList<Recipe> requestList;
-    public Admin(String mailAddress, String name, String surname, String password, ArrayList<String> requestListData) {
-        super(mailAddress, name, surname, password);
+    public Admin(String personID, String mailAddress, String name, String surname, String password, ArrayList<String> requestListData) {
+        super(personID, mailAddress, name, surname, password);
         fillRequestList(requestListData);
     }
 

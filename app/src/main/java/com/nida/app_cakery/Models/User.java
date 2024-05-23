@@ -1,5 +1,7 @@
 package com.nida.app_cakery.Models;
 
+import com.nida.app_cakery.Domain.CakeryDomain;
+
 import java.util.ArrayList;
 
 public class User extends Person {
@@ -10,8 +12,8 @@ public class User extends Person {
 
     private ArrayList<Recipe> myRecipes = new ArrayList<>();
     private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
-    public User(String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData, ArrayList<String> ingredientsInInventory) {
-        super(mailAddress, name, surname, password);
+    public User(String personID, String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData, ArrayList<String> ingredientsInInventory) {
+        super(personID, mailAddress, name, surname, password);
         //databaseden geliceği iççin silinecek
         //ArrayList<String> myRecipesData = new ArrayList<>(); //BURDAKİ LİSTE DATABASEDEN ALINACAK
         //ArrayList<String> favoriteRecipesData = new ArrayList<>();  //BURDAKİ LİSTE DE DATABASEDEN ALINACAK
@@ -19,8 +21,8 @@ public class User extends Person {
         fillRecipeLists(allRecipes,myRecipesData,favoriteRecipesData);
     }
 
-    public User(String mailAddress, String name, String surname, String password ) { //Registration
-        super(mailAddress, name, surname, password);
+    public User(String personID, String mailAddress, String name, String surname, String password ) { //Registration
+        super(personID, mailAddress, name, surname, password);
     }
 
     public void fillRecipeLists(ArrayList<Recipe> allRecipes, ArrayList<String> favoriteList, ArrayList<String> myRecipesList){ //BURDA DEĞİŞİKLİK VAAR
@@ -39,10 +41,12 @@ public class User extends Person {
 
     public void addIngredientToInventory(String ingredientID){
         this.ingredientsInInventory.add(ingredientID);
+        CakeryDomain.getInstance().updateIngredientsInInventory(ingredientsInInventory);
     }
 
     public void removeIngredientFromInventory(String ingredientID){
         this.ingredientsInInventory.remove(ingredientID);
+        CakeryDomain.getInstance().updateIngredientsInInventory(ingredientsInInventory);
     }
 
     public ArrayList<Recipe> getMyRecipes() {

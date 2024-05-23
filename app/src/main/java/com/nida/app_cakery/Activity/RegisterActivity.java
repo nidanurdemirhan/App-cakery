@@ -92,9 +92,10 @@ public class RegisterActivity extends AppCompatActivity {
                                     CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
                                         @Override
                                         public void onTaskCompleted() {
-                                            User newUser = new User(emailAddress, name, surname, password);
+                                            String personID = UUID.randomUUID().toString();
+                                            User newUser = new User(personID, emailAddress, name, surname, password);
                                             CakeryDomain.getInstance().setPerson(newUser);
-                                            CakeryDomain.getInstance().saveObject("User", UUID.randomUUID().toString(), newUser, new FirebaseListener() {
+                                            CakeryDomain.getInstance().saveObject("User", personID , newUser, new FirebaseListener() {
                                                 @Override
                                                 public void onTaskCompleted() {
                                                     startActivity(new Intent(RegisterActivity.this, HomeActivity.class));

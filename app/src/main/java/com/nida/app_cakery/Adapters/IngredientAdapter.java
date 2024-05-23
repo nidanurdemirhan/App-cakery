@@ -50,8 +50,18 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         holder.ingredientName.setText(ingredient.getName());
         holder.ingredientCheckbox.setChecked(ingredientStatus.get(position));
 
-        holder.ingredientCheckbox.setOnCheckedChangeListener((buttonView, isChecked) ->
-                ingredientStatus.set(holder.getAdapterPosition(), isChecked));
+        holder.ingredientCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int adapterPos = holder.getAdapterPosition();
+            ingredientStatus.set(adapterPos, isChecked);
+
+            String ingredientID = ingredients.get(adapterPos).getIngredientID();
+            User user = ((User) (CakeryDomain.getInstance().getPerson()));
+            if(ingredientStatus.get(adapterPos)) {
+                user.addIngredientToInventory(ingredientID);
+            } else{
+                user.removeIngredientFromInventory(ingredientID);
+            }
+        });
     }
 
     @Override
