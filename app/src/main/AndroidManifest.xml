@@ -46,6 +46,7 @@
         <activity android:name=".Activity.CartActivity" />
         <activity android:name=".Activity.FavoriteActivity" />
         <activity android:name=".Activity.AddActivity" />
+        <activity android:name=".Activity.AddRecipeActivity" />
         <activity android:name=".Activity.ListActivity" />
     </application>
 
