@@ -84,6 +84,7 @@ public class CakeryDomain {
     }
 
     public void readRecipes(final FirebaseListener listener){
+        recipeList.clear();
         db.collection("Recipe")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
