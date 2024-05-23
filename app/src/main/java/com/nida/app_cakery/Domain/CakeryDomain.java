@@ -208,7 +208,9 @@ public class CakeryDomain {
                                     favoriteRecipesData.add(recipe.toString());
                                 }
 
-                                person = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData);
+                                ArrayList<String> ingredientsInInventory = (ArrayList<String>) document.get("ingredientsInInventory");
+
+                                person = new User(mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData, ingredientsInInventory);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 listener.onTaskCompleted();
 

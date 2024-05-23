@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nida.app_cakery.Domain.CakeryDomain;
+import com.nida.app_cakery.Models.User;
 import com.nida.app_cakery.R;
 import com.nida.app_cakery.Models.Ingredient;
 
@@ -21,11 +23,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private ArrayList<Boolean> ingredientStatus;
 
     public IngredientAdapter(Context context, ArrayList<Ingredient> ingredients) {
+        //normal ingredients taraması yaparken aynı zamanda inventoryde var mı yok mu ona bakıcam sonrası allah kerim :)
         this.context = context;
         this.ingredients = ingredients;
         this.ingredientStatus = new ArrayList<>(ingredients.size());
         for (int i = 0; i < ingredients.size(); i++) {
-            ingredientStatus.add(false);  // initially, all ingredients are unchecked
+            ArrayList<String> ingredientsInInventory = ((User) (CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
+            if (ingredientsInInventory.contains(ingredients.get(i).getIngredientID())){
+                ingredientStatus.add(true);
+            } else{
+                ingredientStatus.add(false);
+            }
         }
     }
 
