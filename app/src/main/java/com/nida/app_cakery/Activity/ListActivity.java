@@ -1,6 +1,8 @@
 package com.nida.app_cakery.Activity;
 
 import android.os.Bundle;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,9 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private ArrayList<Recipe> recipeList;
+    private SeekBar calorieSeekBar;
+    private TextView seekBarValue;
+    private int selectedCalorieValue = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,30 @@ public class ListActivity extends AppCompatActivity {
         recipeAdapter = new RecipeAdapter(this, recipeList);
         recyclerView.setAdapter(recipeAdapter);
 
+        // SeekBar ve TextView'i referans alın
+        calorieSeekBar = findViewById(R.id.calorieSeekBar);
+        seekBarValue = findViewById(R.id.seekBarValue);
+
+        // SeekBar değişikliklerini dinleyin
+        calorieSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                selectedCalorieValue = progress;
+                seekBarValue.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Kullanıcı SeekBar'a dokunduğunda
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Kullanıcı SeekBar'ı bırakınca
+                fetchRecipes();
+            }
+        });
+
         // Tarif verilerini al
         fetchRecipes();
     }
@@ -43,7 +72,11 @@ public class ListActivity extends AppCompatActivity {
             public void onTaskCompleted() {
                 // Veri alındığında, RecyclerView'e ekle ve güncelle
                 recipeList.clear();
-                recipeList.addAll(CakeryDomain.getInstance().getRecipeList());
+                for (Recipe recipe : CakeryDomain.getInstance().getRecipeList()) {
+                    if (recipe.getCalorie() <= selectedCalorieValue) {
+                        recipeList.add(recipe);
+                    }
+                }
                 recipeAdapter.notifyDataSetChanged();
             }
         });

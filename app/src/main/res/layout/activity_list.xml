@@ -29,6 +29,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         />
+    <TextView
+        android:id="@+id/seekBarValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="500"
+        app:layout_constraintTop_toTopOf="@id/calorieSeekBar"
+        app:layout_constraintBottom_toBottomOf="@id/calorieSeekBar"
+        app:layout_constraintStart_toEndOf="@id/calorieSeekBar"
+        android:layout_marginStart="8dp" />
 
     <!-- Vegan Checkbox -->
     <CheckBox
