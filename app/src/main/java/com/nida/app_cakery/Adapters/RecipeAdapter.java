@@ -46,7 +46,33 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 .load(recipe.getImageUrl())
                 .into(holder.recipeImage);
 
-        //////////////////////////////////////////
+        final boolean[] fav = {false};
+        // Favori durumu kontrolü ve işlemleri
+        if (fav[0] == true) {
+            holder.heartIcon.setImageResource(R.drawable.filled_heart); // Dolu kalp ikonu
+        } else {
+            holder.heartIcon.setImageResource(R.drawable.empty_heart); // Boş kalp ikonu
+        }
+
+        holder.heartIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tarifin favori durumunu tersine çevir
+                if (fav[0] == false){
+                    fav[0] = true;
+                } else {
+                    fav[0] = false;
+                }
+
+                // Favori durumuna göre kalp simgesinin rengini değiştir
+                if (fav[0] ==true) {
+                    holder.heartIcon.setImageResource(R.drawable.filled_heart);
+                } else {
+                    holder.heartIcon.setImageResource(R.drawable.empty_heart);
+                }
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +81,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 context.startActivity(intent);
             }
         });
-        /////////////////////////////////////////////
     }
 
     @Override
@@ -65,7 +90,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView recipeName, recipeDescription, recipeCalories, recipePortion;
-        ImageView recipeImage;
+        ImageView recipeImage, heartIcon; // Kalp simgesi için ImageView eklendi
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,6 +98,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             recipeCalories = itemView.findViewById(R.id.recipe_calories);
             recipePortion = itemView.findViewById(R.id.recipe_portion);
             recipeImage = itemView.findViewById(R.id.recipe_image);
+            heartIcon = itemView.findViewById(R.id.heart_icon); // Kalp simgesi için ImageView tanımlandı
         }
     }
 }

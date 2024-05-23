@@ -20,24 +20,26 @@
     <!-- Kalori Aralığı Seçimi için SeekBar -->
     <SeekBar
         android:id="@+id/calorieSeekBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="16dp"
         android:max="1000"
         android:progress="500"
-        app:layout_constraintTop_toBottomOf="@id/topBarHome"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        />
+        app:layout_constraintStart_toEndOf="@+id/seekBarValue"
+        app:layout_constraintTop_toBottomOf="@id/topBarHome" />
+
     <TextView
         android:id="@+id/seekBarValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="500"
-        app:layout_constraintTop_toTopOf="@id/calorieSeekBar"
-        app:layout_constraintBottom_toBottomOf="@id/calorieSeekBar"
-        app:layout_constraintStart_toEndOf="@id/calorieSeekBar"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096" />
 
     <!-- Vegan Checkbox -->
     <CheckBox
