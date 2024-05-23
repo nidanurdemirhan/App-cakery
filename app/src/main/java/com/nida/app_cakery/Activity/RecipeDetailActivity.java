@@ -33,11 +33,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Geri düğmesine tıklandığında HomeActivity'e dön
-                Intent intent = new Intent(RecipeDetailActivity.this, HomeActivity.class);
-                startActivity(intent);
+                // Geri düğmesine tıklandığında bir önceki aktiviteye dön
+                finish();
             }
         });
+
 
         // Görünümleri bağla
         recipeName = findViewById(R.id.recipe_name);
