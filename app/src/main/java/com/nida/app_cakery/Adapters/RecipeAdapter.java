@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nida.app_cakery.Activity.RecipeDetailActivity;
+import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Models.Recipe;
+import com.nida.app_cakery.Models.User;
 import com.nida.app_cakery.R;
 
 import java.util.ArrayList;
@@ -21,11 +23,30 @@ import java.util.ArrayList;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private Context context;
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Recipe> recipeList;
+    private ArrayList<Boolean> favStatusOfRecipes = new ArrayList<>();
 
-    public RecipeAdapter(Context context, ArrayList<Recipe> recipes) {
+
+    public RecipeAdapter(Context context, ArrayList<Recipe> recipeList) {
         this.context = context;
-        this.recipes = recipes;
+        this.recipeList = recipeList;
+        determineFavStatusOfRecipe(recipeList);
+    }
+
+    private void determineFavStatusOfRecipe(ArrayList<Recipe> recipeList) {
+        favStatusOfRecipes.clear();
+        ArrayList<Recipe> favoriteList = ((User) (CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
+        Boolean status = false;
+        for(int i = 0; i < recipeList.size(); i++) {
+            String recipeID = recipeList.get(i).getRecipeID();
+            for(Recipe favRecipe: favoriteList){
+                if(recipeID.equals(favRecipe.getRecipeID())){
+                    status = true;
+                    break;
+                }
+            }
+            favStatusOfRecipes.add(status);
+        }
     }
 
     @NonNull
@@ -37,7 +58,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        Recipe recipe = recipes.get(position);
+        Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.getName());
         holder.recipeCalories.setText("Kalori: " + recipe.getCalorie());
         holder.recipePortion.setText("Porsiyon: " + recipe.getPortion());
@@ -45,18 +66,22 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Glide.with(context)
                 .load(recipe.getImageUrl())
                 .into(holder.recipeImage);
+        if(!favStatusOfRecipes.isEmpty()) {
+            if (favStatusOfRecipes.get(position)) {
+                holder.heartIcon.setImageResource(R.drawable.filled_heart);
+            } else {
+                holder.heartIcon.setImageResource(R.drawable.empty_heart);
+            }
+        }
 
         final boolean[] fav = {false};
-        // Favori durumu kontrolü ve işlemleri
-        if (fav[0] == true) {
-            holder.heartIcon.setImageResource(R.drawable.filled_heart); // Dolu kalp ikonu
-        } else {
-            holder.heartIcon.setImageResource(R.drawable.empty_heart); // Boş kalp ikonu
-        }
+
 
         holder.heartIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                favStatusOfRecipes.set(position, !favStatusOfRecipes.get(position));
                 // Tarifin favori durumunu tersine çevir
                 if (fav[0] == false){
                     fav[0] = true;
@@ -85,12 +110,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public int getItemCount() {
-        return recipes.size();
+        return recipeList.size();
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView recipeName, recipeDescription, recipeCalories, recipePortion;
-        ImageView recipeImage, heartIcon; // Kalp simgesi için ImageView eklendi
+        ImageView recipeImage, heartIcon;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,7 +123,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             recipeCalories = itemView.findViewById(R.id.recipe_calories);
             recipePortion = itemView.findViewById(R.id.recipe_portion);
             recipeImage = itemView.findViewById(R.id.recipe_image);
-            heartIcon = itemView.findViewById(R.id.heart_icon); // Kalp simgesi için ImageView tanımlandı
+            heartIcon = itemView.findViewById(R.id.heart_icon);
         }
     }
 }

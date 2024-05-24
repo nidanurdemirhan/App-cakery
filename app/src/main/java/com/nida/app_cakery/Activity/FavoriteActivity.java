@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nida.app_cakery.Models.Recipe;
+import com.nida.app_cakery.Models.User;
 import com.nida.app_cakery.R;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Listeners.FirebaseListener;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
-    private ArrayList<Recipe> recipeList;
+    private ArrayList<Recipe> recipeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +31,14 @@ public class FavoriteActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recipeList = new ArrayList<>();
-        recipeAdapter = new RecipeAdapter(this, recipeList);
-        recyclerView.setAdapter(recipeAdapter);
-
         fetchRecipes();
-
         favoriteActivity();
     }
 
     private void fetchRecipes() {
-        CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
-            @Override
-            public void onTaskCompleted() {
-                recipeList.clear();
-                recipeList.addAll(CakeryDomain.getInstance().recipeList);
-                recipeAdapter.notifyDataSetChanged();
-            }
-        });
+        recipeList = ((User)(CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
+        recipeAdapter = new RecipeAdapter(this, recipeList);
+        recyclerView.setAdapter(recipeAdapter);
     }
 
     public void favoriteActivity() {
@@ -93,3 +84,12 @@ public class FavoriteActivity extends AppCompatActivity {
         });
     }
 }
+
+/*
+   private void fetchRecipes() {
+        recipeList = ((User)(CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
+        recipeList = ((User)(CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
+        recipeAdapter.notifyDataSetChanged();
+
+    }
+ */

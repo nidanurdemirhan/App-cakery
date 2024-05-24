@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
-    private ArrayList<Recipe> recipeList;
+    private ArrayList<Recipe> recipeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recipeList = new ArrayList<>();
-        recipeAdapter = new RecipeAdapter(this, recipeList);
-        recyclerView.setAdapter(recipeAdapter);
-
         fetchRecipes();
-
         homeActivity();
     }
 
@@ -43,9 +38,9 @@ public class HomeActivity extends AppCompatActivity {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
             @Override
             public void onTaskCompleted() {
-                recipeList.clear();
-                recipeList.addAll(CakeryDomain.getInstance().recipeList);
-                recipeAdapter.notifyDataSetChanged();
+                recipeList = CakeryDomain.getInstance().getRecipeList();
+                recipeAdapter = new RecipeAdapter(HomeActivity.this, recipeList);
+                recyclerView.setAdapter(recipeAdapter);
             }
         });
     }

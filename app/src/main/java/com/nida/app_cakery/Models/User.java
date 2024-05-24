@@ -12,9 +12,6 @@ public class User extends Person {
     private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
     public User(String personID, String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData, ArrayList<String> ingredientsInInventory) {
         super(personID, mailAddress, name, surname, password);
-        //databaseden geliceği iççin silinecek
-        //ArrayList<String> myRecipesData = new ArrayList<>(); //BURDAKİ LİSTE DATABASEDEN ALINACAK
-        //ArrayList<String> favoriteRecipesData = new ArrayList<>();  //BURDAKİ LİSTE DE DATABASEDEN ALINACAK
         this.ingredientsInInventory = ingredientsInInventory;
         fillRecipeLists(allRecipes,myRecipesData,favoriteRecipesData);
     }
