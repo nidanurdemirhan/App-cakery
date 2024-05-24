@@ -85,11 +85,3 @@ public class FavoriteActivity extends AppCompatActivity {
     }
 }
 
-/*
-   private void fetchRecipes() {
-        recipeList = ((User)(CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
-        recipeList = ((User)(CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
-        recipeAdapter.notifyDataSetChanged();
-
-    }
- */

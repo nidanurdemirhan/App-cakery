@@ -1,6 +1,9 @@
 package com.nida.app_cakery.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -55,6 +58,7 @@ public class ListActivity extends AppCompatActivity {
         });
 
         createRecipeListByIngredients();
+        ListActivity();
     }
 
     private void filterRecipesByCalorie() {
@@ -84,6 +88,49 @@ public class ListActivity extends AppCompatActivity {
                 filteredRecipeList.addAll(recipeList);
                 recipeAdapter = new RecipeAdapter(ListActivity.this, filteredRecipeList);
                 recyclerView.setAdapter(recipeAdapter);
+            }
+        });
+    }
+    public void ListActivity() {
+        ImageButton btnCart = findViewById(R.id.btnCart);
+        ImageButton btnFav = findViewById(R.id.btnFavorites);
+        ImageButton btnHome = findViewById(R.id.btnHome);
+        ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
+        ImageButton btnList = findViewById(R.id.btnAllRecipes);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListActivity.this, CartActivity.class));
+            }
+        });
+
+        btnFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListActivity.this, FavoriteActivity.class));
+
+            }
+        });
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListActivity.this, HomeActivity.class));
+                // Home butonu zaten HomeActivity'de olduğu için işlem yapmayabiliriz
+            }
+        });
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListActivity.this, AddActivity.class));
+            }
+        });
+
+        btnList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }
