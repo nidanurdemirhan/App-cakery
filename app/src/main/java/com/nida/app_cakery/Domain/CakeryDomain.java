@@ -339,10 +339,10 @@ public class CakeryDomain {
                 });
     }
 
-    public void updateIngredientsInInventory(ArrayList<String> newIngrediensInInventory) {
+    public void updateIngredientsInInventory(ArrayList<String> newIngredientsInInventory) {
 
         db.collection("User").document(person.getPersonID())
-                .update("ingredientsInInventory", newIngrediensInInventory)
+                .update("ingredientsInInventory", newIngredientsInInventory)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -5,8 +5,6 @@ import com.nida.app_cakery.Domain.CakeryDomain;
 import java.util.ArrayList;
 
 public class User extends Person {
-    private ArrayList<Boolean> ingredientStatus;
-
     private ArrayList<String> ingredientsInInventory = new ArrayList<>();
 
 
@@ -40,12 +38,12 @@ public class User extends Person {
 
 
     public void addIngredientToInventory(String ingredientID){
-        this.ingredientsInInventory.add(ingredientID);
+        ingredientsInInventory.add(ingredientID);
         CakeryDomain.getInstance().updateIngredientsInInventory(ingredientsInInventory);
     }
 
     public void removeIngredientFromInventory(String ingredientID){
-        this.ingredientsInInventory.remove(ingredientID);
+        ingredientsInInventory.remove(ingredientID);
         CakeryDomain.getInstance().updateIngredientsInInventory(ingredientsInInventory);
     }
 
@@ -71,13 +69,5 @@ public class User extends Person {
 
     public void setIngredientsInInventory(ArrayList<String> ingredientsInInventory) {
         this.ingredientsInInventory = ingredientsInInventory;
-    }
-
-    public ArrayList<Boolean> getIngredientStatus() {
-        return ingredientStatus;
-    }
-
-    public void setIngredientStatus(ArrayList<Boolean> ingredientStatus) {
-        this.ingredientStatus = ingredientStatus;
     }
 }

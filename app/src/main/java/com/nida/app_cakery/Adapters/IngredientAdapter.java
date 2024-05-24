@@ -27,8 +27,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         this.context = context;
         this.ingredients = ingredients;
         this.ingredientStatus = new ArrayList<>(ingredients.size());
+        ArrayList<String> ingredientsInInventory = ((User) (CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
         for (int i = 0; i < ingredients.size(); i++) {
-            ArrayList<String> ingredientsInInventory = ((User) (CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
             if (ingredientsInInventory.contains(ingredients.get(i).getIngredientID())){
                 ingredientStatus.add(true);
             } else{

@@ -1,5 +1,7 @@
 package com.nida.app_cakery.Models;
 
+import com.nida.app_cakery.Domain.CakeryDomain;
+
 import java.util.ArrayList;
 
 public class Recipe {
@@ -31,6 +33,15 @@ public class Recipe {
            }
        }
 
+    }
+    public Boolean isIngredientsAvailable(){
+        ArrayList<String> ingredientsInInventory = ((User)(CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
+        for(int i = 0; i < ingredientInRecipe.size(); i++ ){
+            if(!ingredientsInInventory.contains(ingredientInRecipe.get(i).getIngredient().getIngredientID())){
+                return false;
+            }
+        }
+        return true;
     }
     public String getName() {
         return name;

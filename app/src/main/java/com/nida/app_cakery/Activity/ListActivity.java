@@ -20,7 +20,8 @@ public class ListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
-    private ArrayList<Recipe> recipeList;
+    private ArrayList<Recipe> filteredRecipeList; // recipes which specify by ingredients
+    private ArrayList<Recipe> recipeList; // recipe result(filter process like calorie )
     private SeekBar calorieSeekBar;
     private TextView seekBarValue;
     private int selectedCalorieValue = 500;
@@ -33,8 +34,8 @@ public class ListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recipeRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recipeList = new ArrayList<>();
-        recipeAdapter = new RecipeAdapter(this, recipeList);
+        filteredRecipeList = new ArrayList<>();
+        recipeAdapter = new RecipeAdapter(this, filteredRecipeList);
         recyclerView.setAdapter(recipeAdapter);
 
         // SeekBar ve TextView'i referans alın
@@ -57,26 +58,40 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // Kullanıcı SeekBar'ı bırakınca
-                fetchRecipes();
+                filterRecipesByCalorie();
             }
         });
 
         // Tarif verilerini al
-        fetchRecipes();
+        createRecipeListByIngredients();
+        //fetchRecipes();
     }
 
-    private void fetchRecipes() {
+    private void filterRecipesByCalorie() {
         // Tarif verilerini CakeryDomain sınıfından al
+        // Veri alındığında, RecyclerView'e ekle ve güncelle
+        filteredRecipeList.clear();
+        for (Recipe recipe : CakeryDomain.getInstance().getRecipeList()) {
+            if (recipe.getCalorie() <= selectedCalorieValue) {
+                filteredRecipeList.add(recipe);
+            }
+        }
+        recipeAdapter.notifyDataSetChanged();
+    }
+
+    private void createRecipeListByIngredients() {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
             @Override
             public void onTaskCompleted() {
-                // Veri alındığında, RecyclerView'e ekle ve güncelle
-                recipeList.clear();
-                for (Recipe recipe : CakeryDomain.getInstance().getRecipeList()) {
-                    if (recipe.getCalorie() <= selectedCalorieValue) {
-                        recipeList.add(recipe);
+                filteredRecipeList.clear();
+                ArrayList<Recipe> allRecipes = (CakeryDomain.getInstance()).getRecipeList();
+                for (int i = 0; i < allRecipes.size(); i++) {
+                    Recipe recipe = allRecipes.get(i);
+                    if (recipe.isIngredientsAvailable()) {
+                        filteredRecipeList.add(recipe);
                     }
                 }
+                recipeList = filteredRecipeList;
                 recipeAdapter.notifyDataSetChanged();
             }
         });
