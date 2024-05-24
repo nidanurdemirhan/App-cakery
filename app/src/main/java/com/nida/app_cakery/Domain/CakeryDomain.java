@@ -339,10 +339,10 @@ public class CakeryDomain {
                 });
     }
 
-    public void updateIngredientsInInventory(ArrayList<String> newIngredientsInInventory) {
+    public void updateStringArrayInTheFirestore(String collectionPath, String ArrayName, ArrayList<String> newIngredientsInInventory) {
 
-        db.collection("User").document(person.getPersonID())
-                .update("ingredientsInInventory", newIngredientsInInventory)
+        db.collection(collectionPath).document(person.getPersonID())
+                .update(ArrayName, newIngredientsInInventory)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -357,9 +357,6 @@ public class CakeryDomain {
                 });
     }
 
-    public void addIngredientsInInventory(){
-
-    }
 
     /******************************************************************* GETTER-SETTER *********************************************************************/
     public Person getPerson() {

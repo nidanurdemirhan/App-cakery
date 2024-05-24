@@ -21,10 +21,8 @@ public class Recipe {
         this.calorie =calorie;
         this.portion = portion;
         this.status = status;
-        this.ingredientInRecipe = ingredientInRecipe;  //ADDED
+        this.ingredientInRecipe = ingredientInRecipe;
         this.imageUrl = imageUrl;
-        //ArrayList<IngredientInRecipe> allIngredientInRecipe = new ArrayList<>();//BUNU PARAMETRE OLARAK VERİCEZ GLB HATA VERMESİN DİYE YAZDIM EMİN DEĞİLİM
-        //fillIngredientList(allIngredientInRecipe);
     }
     public void fillIngredientList(ArrayList<IngredientInRecipe> allIngredientInRecipe){
        for(int i=0;i<allIngredientInRecipe.size();i++){

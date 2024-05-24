@@ -1,7 +1,5 @@
 package com.nida.app_cakery.Models;
 
-import java.util.ArrayList;
-
 public class Ingredient {
     private String ingredientID;
     private String name;
@@ -20,13 +18,6 @@ public class Ingredient {
         this.category = category;
         this.url = url;
     }
-
-    /*
-        public Ingredient(String name) {
-        this.name = name;
-    }
-
-     */
 
     public String getIngredientID() {
         return ingredientID;

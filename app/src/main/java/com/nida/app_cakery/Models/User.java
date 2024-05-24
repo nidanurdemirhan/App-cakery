@@ -2,6 +2,7 @@ package com.nida.app_cakery.Models;
 
 import com.nida.app_cakery.Domain.CakeryDomain;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class User extends Person {
@@ -36,12 +37,41 @@ public class User extends Person {
 
     public void addIngredientToInventory(String ingredientID){
         ingredientsInInventory.add(ingredientID);
-        CakeryDomain.getInstance().updateIngredientsInInventory(ingredientsInInventory);
+        CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "ingredientsInInventory",  ingredientsInInventory );
     }
 
     public void removeIngredientFromInventory(String ingredientID){
         ingredientsInInventory.remove(ingredientID);
-        CakeryDomain.getInstance().updateIngredientsInInventory(ingredientsInInventory);
+        CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "ingredientsInInventory",  ingredientsInInventory );
+    }
+
+    public void addToFavoriteRecipes(Recipe recipe){
+        favoriteRecipes.add(recipe);
+        ArrayList<String> favRecipeIDList = convertRecipeToStringArr();
+        CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "favoriteRecipes", favRecipeIDList);
+    }
+
+    public void removeFromFavoriteRecipes(String recipeID){
+        favoriteRecipes.remove(findRecipeInTheFavRecipeList(recipeID));
+        ArrayList<String> favRecipeIDList = convertRecipeToStringArr();
+        CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "favoriteRecipes", favRecipeIDList);
+    }
+
+    private ArrayList<String> convertRecipeToStringArr(){
+        ArrayList<String> favRecipeIDList = new ArrayList<>();
+        for(Recipe favRecipe: favoriteRecipes){
+            favRecipeIDList.add(favRecipe.getRecipeID());
+        }
+        return favRecipeIDList;
+    }
+
+    private Recipe findRecipeInTheFavRecipeList(String recipeID){
+        for(Recipe favRecipe: favoriteRecipes){
+            if(favRecipe.getRecipeID().equals(recipeID)){
+                return favRecipe;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Recipe> getMyRecipes() {

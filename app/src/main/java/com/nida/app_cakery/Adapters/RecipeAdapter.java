@@ -36,9 +36,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private void determineFavStatusOfRecipe(ArrayList<Recipe> recipeList) {
         favStatusOfRecipes.clear();
         ArrayList<Recipe> favoriteList = ((User) (CakeryDomain.getInstance().getPerson())).getFavoriteRecipes();
-        Boolean status = false;
         for(int i = 0; i < recipeList.size(); i++) {
             String recipeID = recipeList.get(i).getRecipeID();
+            Boolean status = false;
             for(Recipe favRecipe: favoriteList){
                 if(recipeID.equals(favRecipe.getRecipeID())){
                     status = true;
@@ -60,8 +60,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         Recipe recipe = recipeList.get(position);
         holder.recipeName.setText(recipe.getName());
-        holder.recipeCalories.setText("Kalori: " + recipe.getCalorie());
-        holder.recipePortion.setText("Porsiyon: " + recipe.getPortion());
+        holder.recipeCalories.setText("Calorie: " + recipe.getCalorie());
+        holder.recipePortion.setText("Portion: " + recipe.getPortion());
 
         Glide.with(context)
                 .load(recipe.getImageUrl())
@@ -74,27 +74,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             }
         }
 
-        final boolean[] fav = {false};
-
-
         holder.heartIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                User user = (User)(CakeryDomain.getInstance().getPerson());
                 favStatusOfRecipes.set(position, !favStatusOfRecipes.get(position));
-                // Tarifin favori durumunu tersine çevir
-                if (fav[0] == false){
-                    fav[0] = true;
-                } else {
-                    fav[0] = false;
-                }
-
-                // Favori durumuna göre kalp simgesinin rengini değiştir
-                if (fav[0] ==true) {
+                if (favStatusOfRecipes.get(position)) {
                     holder.heartIcon.setImageResource(R.drawable.filled_heart);
+                    user.addToFavoriteRecipes(recipe);
+
                 } else {
                     holder.heartIcon.setImageResource(R.drawable.empty_heart);
+                    user.removeFromFavoriteRecipes(recipe.getRecipeID());
                 }
+                notifyItemChanged(position);
+
             }
         });
 
