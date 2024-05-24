@@ -21,7 +21,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private ArrayList<Recipe> filteredRecipeList; // recipes which specify by ingredients
-    private ArrayList<Recipe> recipeList; // recipe result(filter process like calorie )
+    private ArrayList<Recipe> recipeList = new ArrayList<>(); // recipe result(filter process like calorie )
     private SeekBar calorieSeekBar;
     private TextView seekBarValue;
     private int selectedCalorieValue = 500;
@@ -71,7 +71,7 @@ public class ListActivity extends AppCompatActivity {
         // Tarif verilerini CakeryDomain sınıfından al
         // Veri alındığında, RecyclerView'e ekle ve güncelle
         filteredRecipeList.clear();
-        for (Recipe recipe : CakeryDomain.getInstance().getRecipeList()) {
+        for (Recipe recipe : recipeList ) {
             if (recipe.getCalorie() <= selectedCalorieValue) {
                 filteredRecipeList.add(recipe);
             }
@@ -89,9 +89,9 @@ public class ListActivity extends AppCompatActivity {
                     Recipe recipe = allRecipes.get(i);
                     if (recipe.isIngredientsAvailable()) {
                         filteredRecipeList.add(recipe);
+                        recipeList.add(recipe);
                     }
                 }
-                recipeList = filteredRecipeList;
                 recipeAdapter.notifyDataSetChanged();
             }
         });
