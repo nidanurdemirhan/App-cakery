@@ -79,7 +79,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
         // Malzeme ekleme düğmesine tıklandığında
-        /*btnAddIngredient.setOnClickListener(new View.OnClickListener() {
+        btnAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String ingredientName = ingredientSpinner.getSelectedItem().toString();
@@ -104,7 +104,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 updateIngredientList();
             }
         });
-        */
+
 
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {

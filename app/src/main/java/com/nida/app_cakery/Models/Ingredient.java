@@ -6,7 +6,6 @@ public class Ingredient {
     private boolean isVegan;
     private String alternative;
     private String category;
-
     private String url;
 
     public Ingredient(String ingredientID, String name,
@@ -19,7 +18,9 @@ public class Ingredient {
         this.url = url;
     }
 
-    
+    public Ingredient(String name) {
+        this.name = name;
+    }
 
     public String getIngredientID() {
         return ingredientID;
