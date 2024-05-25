@@ -9,19 +9,25 @@
         android:id="@+id/ingredient_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Ingredient Name" />
+        android:layout_weight="2"
+        android:text="Ingredient Name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/ingredient_amount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Amount"
-        android:layout_marginEnd="8dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/ingredient_unit"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Unit" />
+        android:layout_weight="1"
+        android:text="Unit"
+        android:textSize="16sp" />
+
 </LinearLayout>

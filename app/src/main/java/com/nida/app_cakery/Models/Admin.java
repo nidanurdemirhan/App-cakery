@@ -5,6 +5,7 @@ import com.nida.app_cakery.Domain.CakeryDomain;
 import java.util.ArrayList;
 
 public class Admin extends Person {
+
     private ArrayList<Recipe> requestList;
     public Admin(String personID, String mailAddress, String name, String surname, String password, ArrayList<String> requestListData) {
         super(personID, mailAddress, name, surname, password);
@@ -22,5 +23,13 @@ public class Admin extends Person {
                 }
             }
         }
+    }
+
+    public ArrayList<Recipe> getRequestList() {
+        return requestList;
+    }
+
+    public void setRequestList(ArrayList<Recipe> requestList) {
+        this.requestList = requestList;
     }
 }

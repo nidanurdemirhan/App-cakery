@@ -19,6 +19,8 @@ public class Ingredient {
         this.url = url;
     }
 
+    
+
     public String getIngredientID() {
         return ingredientID;
     }

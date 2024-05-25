@@ -10,13 +10,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.nida.app_cakery.Adapters.IngredientAdapter;
+import com.nida.app_cakery.Adapters.IngredientInRecipeAdapter;
+import com.nida.app_cakery.Domain.CakeryDomain;
+import com.nida.app_cakery.Models.IngredientInRecipe;
+import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private TextView recipeName, recipeDescription, recipeCalories, recipePortion;
@@ -57,33 +69,67 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void loadRecipeDetails() {
-        db.collection("Recipe").document(recipeID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String name = document.getString("name");
-                        String description = document.getString("description");
-                        double calorie = document.getDouble("calorie");
-                        long portion = document.getLong("portion");
-                        String imageUrl = document.getString("url");
+        // CakeryDomain sınıfından recipeList'i al
+        ArrayList<Recipe> recipeList = CakeryDomain.getInstance().getRecipeList();
 
-                        recipeName.setText(name);
-                        recipeDescription.setText(description);
-                        recipeCalories.setText("Kalori: " + calorie);
-                        recipePortion.setText("Porsiyon: " + portion);
-
-                        Glide.with(RecipeDetailActivity.this)
-                                .load(imageUrl)
-                                .into(recipeImage);
-                    } else {
-                        Log.d("RecipeDetailActivity", "No such document");
-                    }
-                } else {
-                    Log.d("RecipeDetailActivity", "get failed with ", task.getException());
-                }
+        // recipeID'ye göre doğru reçeteyi bul
+        Recipe loadedRecipe = null;
+        for (Recipe recipe : recipeList) {
+            if (recipe.getRecipeID().equals(recipeID)) {
+                loadedRecipe = recipe;
+                break;
             }
-        });
+        }
+
+        // Eğer reçete bulunduysa, detayları yükle
+        if (loadedRecipe != null) {
+            String name = loadedRecipe.getName();
+            String description = loadedRecipe.getDescription();
+            double calorie = loadedRecipe.getCalorie();
+            long portion = loadedRecipe.getPortion();
+            String imageUrl = loadedRecipe.getImageUrl();
+
+            recipeName.setText(name);
+            recipeDescription.setText(description);
+            recipeCalories.setText("Kalori: " + calorie);
+            recipePortion.setText("Porsiyon: " + portion);
+
+            Glide.with(RecipeDetailActivity.this)
+                    .load(imageUrl)
+                    .into(recipeImage);
+
+            // Recipe'nin içindeki ingredientlerin listesini al
+            loadIngredients(loadedRecipe);
+        } else {
+            Log.d("RecipeDetailActivity", "Recipe not found");
+        }
     }
+
+
+    private void loadIngredients(Recipe loadedRecipe) {
+        ArrayList<IngredientInRecipe> ingredientInRecipeList = loadedRecipe.getIngredientInRecipe();
+        ArrayList<String> ingredientsList = new ArrayList<>();
+        ArrayList<Double> ingredientsAmountList = new ArrayList<>();
+        ArrayList<String> ingredientsUnitList = new ArrayList<>();
+
+        // Firebase'den alınan recipe'deki ingredientleri kullanarak ingredientInRecipeList'i doldur
+
+        for (IngredientInRecipe ingredientInRecipe : ingredientInRecipeList) {
+            String ingredientName = ingredientInRecipe.getIngredient().getName();
+            double amount = ingredientInRecipe.getAmount();
+            String unit = ingredientInRecipe.getUnit();
+            ingredientsList.add(ingredientName);
+            ingredientsAmountList.add(amount);
+            ingredientsUnitList.add(unit);
+        }
+
+        // RecyclerView ve Adapter kurulumu
+        RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_recycler_view);
+        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        IngredientInRecipeAdapter ingredientAdapter = new IngredientInRecipeAdapter(ingredientInRecipeList);
+        ingredientsRecyclerView.setAdapter(ingredientAdapter);
+    }
+
+
+
 }
