@@ -1,15 +1,15 @@
 package com.nida.app_cakery.Models;
 
 import com.nida.app_cakery.Domain.CakeryDomain;
+import com.nida.app_cakery.Listeners.FirebaseListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class User extends Person {
     private ArrayList<String> ingredientsInInventory = new ArrayList<>();
 
 
-    private ArrayList<Recipe> myRecipes = new ArrayList<>();
+    private ArrayList<Recipe> myRecipeList = new ArrayList<>();
     private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
     public User(String personID, String mailAddress, String name, String surname, String password, ArrayList<Recipe> allRecipes, ArrayList<String> myRecipesData, ArrayList<String> favoriteRecipesData, ArrayList<String> ingredientsInInventory) {
         super(personID, mailAddress, name, surname, password);
@@ -24,7 +24,7 @@ public class User extends Person {
     public void fillRecipeLists(ArrayList<Recipe> allRecipes, ArrayList<String> favoriteList, ArrayList<String> myRecipesList){ //BURDA DEĞİŞİKLİK VAAR
         for(int i=0;i<allRecipes.size();i++){
             if(myRecipesList.contains(allRecipes.get(i).getRecipeID())){
-                this.myRecipes.add(allRecipes.get(i));
+                this.myRecipeList.add(allRecipes.get(i));
             }
         }
         for(int i=0;i<allRecipes.size();i++){
@@ -47,22 +47,22 @@ public class User extends Person {
 
     public void addToFavoriteRecipes(Recipe recipe){
         favoriteRecipes.add(recipe);
-        ArrayList<String> favRecipeIDList = convertRecipeToStringArr();
+        ArrayList<String> favRecipeIDList = convertRecipeToStringArr(favoriteRecipes);
         CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "favoriteRecipes", favRecipeIDList);
     }
 
     public void removeFromFavoriteRecipes(String recipeID){
         favoriteRecipes.remove(findRecipeInTheFavRecipeList(recipeID));
-        ArrayList<String> favRecipeIDList = convertRecipeToStringArr();
+        ArrayList<String> favRecipeIDList = convertRecipeToStringArr(favoriteRecipes);
         CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "favoriteRecipes", favRecipeIDList);
     }
 
-    private ArrayList<String> convertRecipeToStringArr(){
-        ArrayList<String> favRecipeIDList = new ArrayList<>();
-        for(Recipe favRecipe: favoriteRecipes){
-            favRecipeIDList.add(favRecipe.getRecipeID());
+    private ArrayList<String> convertRecipeToStringArr(ArrayList<Recipe> recipeList){
+        ArrayList<String> recipeIDList = new ArrayList<>();
+        for(Recipe recipe: recipeList){
+            recipeIDList.add(recipe.getRecipeID());
         }
-        return favRecipeIDList;
+        return recipeIDList;
     }
 
     private Recipe findRecipeInTheFavRecipeList(String recipeID){
@@ -74,12 +74,19 @@ public class User extends Person {
         return null;
     }
 
-    public ArrayList<Recipe> getMyRecipes() {
-        return myRecipes;
+    public void addRecipeToMyRecipeList(Recipe recipe){
+        CakeryDomain.getInstance().addRecipe(recipe);
+        myRecipeList.add(recipe);
+        ArrayList<String> myRecipeIdList = convertRecipeToStringArr(myRecipeList);
+        CakeryDomain.getInstance().updateStringArrayInTheFirestore("User", "myRecipes", myRecipeIdList);
     }
 
-    public void setMyRecipes(ArrayList<Recipe> myRecipes) {
-        this.myRecipes = myRecipes;
+    public ArrayList<Recipe> getMyRecipeList() {
+        return myRecipeList;
+    }
+
+    public void setMyRecipeList(ArrayList<Recipe> myRecipeList) {
+        this.myRecipeList = myRecipeList;
     }
 
     public ArrayList<Recipe> getFavoriteRecipes() {

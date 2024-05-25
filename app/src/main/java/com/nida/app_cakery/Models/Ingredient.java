@@ -18,8 +18,14 @@ public class Ingredient {
         this.url = url;
     }
 
-    public Ingredient(String name) {
-        this.name = name;
+    public Ingredient(String ingredientID, String ingredientName) {
+        this.ingredientID = ingredientID;
+        this.name = ingredientName;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public String getIngredientID() {

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nida.app_cakery.Models.Recipe;
+import com.nida.app_cakery.Models.User;
 import com.nida.app_cakery.R;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Listeners.FirebaseListener;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public class AddActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
-    private ArrayList<Recipe> recipeList;
+    private ArrayList<Recipe> myRecipeList;
     private Button addNewRecipeButton;
 
     @Override
@@ -32,10 +33,6 @@ public class AddActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recipeList = new ArrayList<>();
-        recipeAdapter = new RecipeAdapter(this, recipeList);
-        recyclerView.setAdapter(recipeAdapter);
-
         addNewRecipeButton = findViewById(R.id.bttnAddPage);
         addNewRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,18 +42,17 @@ public class AddActivity extends AppCompatActivity {
             }
         });
 
-        fetchRecipes();
-
+        fetchMyRecipeList();
         addActivity();
     }
 
-    private void fetchRecipes() {
+    private void fetchMyRecipeList() {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
             @Override
             public void onTaskCompleted() {
-                recipeList.clear();
-                recipeList.addAll(CakeryDomain.getInstance().recipeList);
-                recipeAdapter.notifyDataSetChanged();
+                myRecipeList = ((User)(CakeryDomain.getInstance().getPerson())).getMyRecipeList();
+                recipeAdapter = new RecipeAdapter(AddActivity.this, myRecipeList);
+                recyclerView.setAdapter(recipeAdapter);
             }
         });
     }

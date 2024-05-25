@@ -274,20 +274,36 @@ public class CakeryDomain {
         recipeData.put("calorie", recipe.getCalorie());
         recipeData.put("portion", recipe.getPortion());
         recipeData.put("status", recipe.getStatus());
+        recipeData.put("url", recipe.getImageUrl());
 
         Map<String, Map<String, Object>> ingredientsMap = new HashMap<>();
         for (IngredientInRecipe ingredientInRecipe : recipe.getIngredientInRecipe()) {
             Map<String, Object> ingredientData = new HashMap<>();
             ingredientData.put("amount", ingredientInRecipe.getAmount());
             ingredientData.put("unit", ingredientInRecipe.getUnit());
-            ingredientsMap.put(ingredientInRecipe.getIngredientID(), ingredientData);
+            ingredientsMap.put(ingredientInRecipe.getIngredient().getIngredientID(), ingredientData);
         }
         recipeData.put("ingredientsInRecipe", ingredientsMap);
 
         db.collection("Recipe").document(recipe.getRecipeID()).set(recipeData)
                 .addOnSuccessListener(documentReference -> Log.d(TAG, "Recipe added successfully"))
                 .addOnFailureListener(e -> Log.w(TAG, "Error adding recipe: " + e.getMessage()));
-        
+        /*
+        db.collection("Recipe").document(recipe.getRecipeID())
+                .set(recipeData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+         */
     }
 
     public void updateIngredient(String documentId, String newName) {

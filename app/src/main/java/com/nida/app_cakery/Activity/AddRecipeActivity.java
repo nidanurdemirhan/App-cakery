@@ -61,7 +61,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         portionSpinner.setAdapter(portionAdapter);
 
         // Malzeme listesini alarak Spinner'ı doldurun
-        ArrayAdapter<String> ingredientAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getIngredientNames());
+        ArrayAdapter<Ingredient> ingredientAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ingredients);
         ingredientSpinner.setAdapter(ingredientAdapter);
 
         // Spinner'da bir öğe seçildiğinde ne yapılacağını belirleyin
@@ -82,13 +82,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         btnAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ingredientName = ingredientSpinner.getSelectedItem().toString();
+                Ingredient ingredient = (Ingredient) ingredientSpinner.getSelectedItem();
+                String ingredientID = ingredient.getIngredientID();
+                String ingredientName = ingredient.getName();
                 double amount = Double.parseDouble(etAmount.getText().toString().trim());
                 String unit = etUnit.getText().toString().trim();
 
                 // Yeni bir malzeme nesnesi oluştur
-                Ingredient ingredient = new Ingredient(ingredientName);
-                IngredientInRecipe ingredientInRecipe = new IngredientInRecipe(null, ingredient, amount, unit);
+                Ingredient selectedIngredient = new Ingredient(ingredientID, ingredientName);
+                IngredientInRecipe ingredientInRecipe = new IngredientInRecipe(null, selectedIngredient, amount, unit);
 
                 // Malzemeyi listeye ekle
                 ingredientsList.add(ingredientInRecipe);
@@ -124,9 +126,13 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
                 // Create Recipe_Request object
-                Recipe recipeRequest = new Recipe("5678",name, description, ingredientsList, calorie, portion, "unshared", imageUrl);
+                // Create Recipe_Request object
+                String recipeID = UUID.randomUUID().toString();
+                Recipe recipeRequest = new Recipe(recipeID, name, description, ingredientsList, calorie, portion, "unshared", imageUrl);
+
                 User user = (User) CakeryDomain.getInstance().getPerson();
-                user.getMyRecipes().add(recipeRequest); // FIRESTOREA EKLENECEK
+                user.addRecipeToMyRecipeList(recipeRequest);
+                finish();
             }
         });
 
@@ -145,7 +151,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Admin admin = (Admin) CakeryDomain.getInstance().getPerson();
                 admin.getRequestList().add(recipeRequest); // FIRESTOREA EKLENECEK
                 User user = (User) CakeryDomain.getInstance().getPerson();
-                user.getMyRecipes().add(recipeRequest); // FIRESTOREA EKLENECEK
+                //user.getMyRecipes().add(recipeRequest); // FIRESTOREA EKLENECEK
             }
         });
     }
