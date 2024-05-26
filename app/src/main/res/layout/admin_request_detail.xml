@@ -111,34 +111,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/portionSpinner" />
 
             <Button
-                android:id="@+id/btnAddIngredient"
+                android:id="@+id/btnReject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="Add Ingredient"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientSpinner" />
-
-            <Button
-                android:id="@+id/btnSend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="180dp"
-                android:text="Send"
+                android:layout_marginTop="216dp"
+                android:text="Reject"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredientList" />
 
             <Button
-                android:id="@+id/btnSubmit"
+                android:id="@+id/btnConfirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="180dp"
-                android:text="Submit"
+                android:layout_marginTop="216dp"
+                android:text="Confirm"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.261"
+                app:layout_constraintHorizontal_bias="0.282"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredientList" />
 
@@ -153,12 +143,11 @@
                 android:id="@+id/ingredientList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:text=""
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.038"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnAddIngredient" />
+                tools:layout_editor_absoluteY="428dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

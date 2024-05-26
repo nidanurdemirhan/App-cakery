@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         CakeryDomain cakeryDomain = CakeryDomain.getInstance();
 
                                                         if (CakeryDomain.getInstance().getPerson() instanceof Admin){
-                                                            startActivity(new Intent(LoginActivity.this, RegisterActivity.class)); //BU DEĞİŞECEK SADECE DENEME AMAÇLI
+                                                            startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class)); //BU DEĞİŞECEK SADECE DENEME AMAÇLI
                                                         }else {
                                                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                                                             //updateUI(user);
