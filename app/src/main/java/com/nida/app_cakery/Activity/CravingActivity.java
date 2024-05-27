@@ -1,16 +1,175 @@
 package com.nida.app_cakery.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.nida.app_cakery.R;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CravingActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private TextView questionTextView;
+
+    private String answer = "";
+
+    private int count = 0;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.craving_test_page);
+        setUpNavigationButtons();
+        questionAndAnswer();
+    }
+
+    private void setUpNavigationButtons() {
+        ImageButton btnCart = findViewById(R.id.btnCart);
+        ImageButton btnFav = findViewById(R.id.btnFavorites);
+        ImageButton btnHome = findViewById(R.id.btnHome);
+        ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
+        ImageButton btnList = findViewById(R.id.btnAllRecipes);
+        Button btnReturn = findViewById(R.id.btnTestReturn);
+
+        btnReturn.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, HomeActivity.class)));
+        btnCart.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, CartActivity.class)));
+        btnFav.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, FavoriteActivity.class)));
+        btnHome.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, HomeActivity.class)));
+        btnAdd.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, AddActivity.class)));
+        btnList.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, ListActivity.class)));
+    }
+
+    private void questionAndAnswer() {
+        String[][] QAs = {
+                {"Sweet or Salt?", "Sweet", "Salt"}, //""
+                {"Cake, Cookie or Other?", "Cake", "Cookie", "Other?"}, //0
+                {"Cupcake, Cake, Cheesecake?", "Cupcake", "Cake", "Cheesecake"}, //00
+                {"Nuts, Chocolate or Fruits?", "Nuts", "Chocolate", "Fruit"}, //01
+                {"Tartlet, Pudding, or Siruped?", "Tartlet", "Pudding", "Siruped"}, //02
+                {"Patty, Pastry Bun or Snacks?", "Patty", "Pastry Bun", "Snacks"}, //1
+                {"Cheese, Vegetables or Meat?", "Cheese", "Vegetables", "Meat"}, //10, 11
+                {"Cracker, Bagel or Rusk?", "Cracker", "Bagel", "Rusk"} //12
+        };
+
+        Button answer1 = findViewById(R.id.btnTestAnswer1);
+        Button answer2 = findViewById(R.id.btnTestAnswer2);
+        Button answer3 = findViewById(R.id.btnTestAnswer3);
+        TextView question = findViewById(R.id.tvQuestion);
+
+
+        if (count == 0) {
+            answer3.setVisibility(View.INVISIBLE);
+            question.setText(QAs[0][0]);
+        }
+
+        answer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer3.setVisibility(View.VISIBLE);
+                if (answer.equals("")) {
+                    answer += "0";
+                    question.setText(QAs[1][0]);
+                } else if (answer.equals("0")) {
+                    answer += "00";
+                    question.setText(QAs[2][0]);
+                } else if (answer.equals("1")) {
+                    answer += "10";
+                    question.setText(QAs[6][0]);
+                } else if (answer.equals("00")) {
+                    answer += "000";
+                } else if (answer.equals("01")) {
+                    answer += "010";
+                } else if (answer.equals("02")) {
+                    answer += "020";
+                } else if (answer.equals("10")) {
+                    answer += "100";
+                } else if (answer.equals("11")) {
+                    answer += "110";
+                } else if (answer.equals("12")) {
+                    answer += "120";
+                }
+                count++;
+            }
+
+        });
+        answer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer3.setVisibility(View.VISIBLE);
+
+                if (answer.equals("")) {
+                    answer += "1";
+                    question.setText(QAs[1][0]);
+                } else if (answer.equals("0")) {
+                    answer += "01";
+                    question.setText(QAs[3][0]);
+                } else if (answer.equals("1")) {
+                    answer += "11";
+                    question.setText(QAs[6][0]);
+                } else if (answer.equals("00")) {
+                    answer += "001";
+                } else if (answer.equals("01")) {
+                    answer += "011";
+                } else if (answer.equals("02")) {
+                    answer += "021";
+                } else if (answer.equals("10")) {
+                    answer += "101";
+                } else if (answer.equals("11")) {
+                    answer += "111";
+                } else if (answer.equals("12")) {
+                    answer += "121";
+                }
+                count++;
+            }
+        });
+        answer3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                answer3.setVisibility(View.VISIBLE);
+
+                if (answer.equals("0")) {
+                    answer += "02";
+                    question.setText(QAs[4][0]);
+                } else if (answer.equals("1")) {
+                    answer += "12";
+                    question.setText(QAs[7][0]);
+                } else if (answer.equals("00")) {
+                    answer += "002";
+                } else if (answer.equals("01")) {
+                    answer += "012";
+                } else if (answer.equals("02")) {
+                    answer += "022";
+                } else if (answer.equals("10")) {
+                    answer += "102";
+                } else if (answer.equals("11")) {
+                    answer += "112";
+                } else if (answer.equals("12")) {
+                    answer += "122";
+                }
+            }
+        });
+
+        if (count == 3) {
+            //SONUCU GÖRÜNTÜLE
+            count = 0;
+        }
+
+
+
+
+
 
     }
+
+
 }
