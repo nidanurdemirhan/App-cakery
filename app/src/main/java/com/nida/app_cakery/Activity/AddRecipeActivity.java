@@ -166,6 +166,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     private void addIngredientEntry() {
+        // Yeni bir ConstraintLayout oluşturun
+        ConstraintLayout newLayout = new ConstraintLayout(AddRecipeActivity.this);
+        newLayout.setId(View.generateViewId());
+
         // Yeni bir EditText oluşturun
         EditText newAmountEditText = new EditText(AddRecipeActivity.this);
         newAmountEditText.setId(View.generateViewId());
@@ -180,26 +184,39 @@ public class AddRecipeActivity extends AppCompatActivity {
         ArrayAdapter<String> newIngredientAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getIngredientNames());
         newIngredientSpinner.setAdapter(newIngredientAdapter);
 
-        // Yeni oluşturulan EditText ve Spinner'ları ConstraintLayout'a ekleyin
-        ConstraintLayout layout = findViewById(R.id.constraintLayout);
+        // Yeni oluşturulan EditText ve Spinner'ları yeni ConstraintLayout'a ekleyin
+        newLayout.addView(newAmountEditText);
+        newLayout.addView(newUnitEditText);
+        newLayout.addView(newIngredientSpinner);
+
         ConstraintSet set = new ConstraintSet();
-        set.clone(layout);
+        set.clone(newLayout);
 
-        // Yeni EditText'leri ve Spinner'ları ConstraintSet'e ekleyin
-        layout.addView(newAmountEditText);
-        layout.addView(newUnitEditText);
-        layout.addView(newIngredientSpinner);
-
-        // Bağlantıları kurun
-        set.connect(newAmountEditText.getId(), ConstraintSet.TOP, R.id.btnAddIngredient, ConstraintSet.BOTTOM, 8);
-        set.connect(newUnitEditText.getId(), ConstraintSet.TOP, R.id.btnAddIngredient, ConstraintSet.BOTTOM, 8);
-        set.connect(newIngredientSpinner.getId(), ConstraintSet.TOP, R.id.btnAddIngredient, ConstraintSet.BOTTOM, 8);
+        // Yeni bileşenlerin yerleşimlerini ayarlayın
+        set.connect(newAmountEditText.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 8);
+        set.connect(newUnitEditText.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 8);
+        set.connect(newIngredientSpinner.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 8);
         set.connect(newAmountEditText.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 16);
         set.connect(newAmountEditText.getId(), ConstraintSet.END, newUnitEditText.getId(), ConstraintSet.START, 8);
         set.connect(newUnitEditText.getId(), ConstraintSet.END, newIngredientSpinner.getId(), ConstraintSet.START, 8);
         set.connect(newIngredientSpinner.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 16);
-        set.applyTo(layout);
+
+        set.applyTo(newLayout);
+
+        // Yeni ConstraintLayout'u iç ConstraintLayout'a ekleyin
+        ConstraintLayout innerLayout = findViewById(R.id.innerConstraintLayout);
+        innerLayout.addView(newLayout);
+
+        // Yeni ConstraintLayout'un yerleşimini ayarlayın
+       /* ConstraintSet parentSet = new ConstraintSet();
+        parentSet.clone(innerLayout);*/
+
+        /*parentSet.connect(newLayout.getId(), ConstraintSet.TOP, R.id.btnAddIngredient, ConstraintSet.BOTTOM, 8);
+        parentSet.connect(newLayout.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
+        parentSet.connect(newLayout.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
+        parentSet.applyTo(innerLayout);*/
     }
+
 
     private void updateIngredientList() {
         StringBuilder stringBuilder = new StringBuilder();
