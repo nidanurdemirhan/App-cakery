@@ -3,6 +3,7 @@ package com.nida.app_cakery.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,6 +52,14 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton btnHome = findViewById(R.id.btnHome);
         ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
         ImageButton btnList = findViewById(R.id.btnAllRecipes);
+        Button btnTest = findViewById(R.id.btnCravingTest);
+
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, CravingActivity.class));
+            }
+        });
 
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
