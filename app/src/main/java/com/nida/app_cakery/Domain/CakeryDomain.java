@@ -283,7 +283,7 @@ public class CakeryDomain {
             ingredientData.put("unit", ingredientInRecipe.getUnit());
             ingredientsMap.put(ingredientInRecipe.getIngredient().getIngredientID(), ingredientData);
         }
-        recipeData.put("ingredientsInRecipe", ingredientsMap);
+        recipeData.put("Ingredients", ingredientsMap);
 
         db.collection("Recipe").document(recipe.getRecipeID()).set(recipeData)
                 .addOnSuccessListener(documentReference -> Log.d(TAG, "Recipe added successfully"))
