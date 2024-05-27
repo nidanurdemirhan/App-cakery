@@ -367,6 +367,40 @@ public class CakeryDomain {
                 .update(ArrayName, FieldValue.arrayRemove(recipeID));
     }
 
+    public void updateFieldInFirestoreDb(String collectionPath, String documentPath, String field, String newValue){
+        db.collection(collectionPath).document(documentPath)
+                .update(field, newValue)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+
+    public void setDocumentInFirestoreDb(String collectionPath, String documentPath, Recipe request){
+        db.collection(collectionPath).document(documentPath)
+                .set(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
 
     /******************************************************************* GETTER-SETTER *********************************************************************/
     public Person getPerson() {
