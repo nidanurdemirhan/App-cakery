@@ -1,28 +1,15 @@
 package com.nida.app_cakery.Activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.nida.app_cakery.R;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class CravingActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private TextView questionTextView;
-
     private String answer = "";
-
     private int count = 0;
 
     @Override
@@ -66,7 +53,6 @@ public class CravingActivity extends AppCompatActivity {
         Button answer3 = findViewById(R.id.btnTestAnswer3);
         TextView question = findViewById(R.id.tvQuestion);
 
-
         if (count == 0) {
             answer3.setVisibility(View.INVISIBLE);
             question.setText(QAs[0][0]);
@@ -88,13 +74,13 @@ public class CravingActivity extends AppCompatActivity {
                     answer += "10";
                     setQuestionAnswer(QAs, answer1, answer2, answer3, question, 6);
                 } else if (answer.equals("00")) {
-                    answer += "000";
+                    answer += "000"; //ID: 11
                 } else if (answer.equals("01")) {
                     answer += "010";
                 } else if (answer.equals("02")) {
-                    answer += "020";
+                    answer += "020"; //4
                 } else if (answer.equals("10")) {
-                    answer += "100";
+                    answer += "100"; //ID = 12
                 } else if (answer.equals("11")) {
                     answer += "110";
                 } else if (answer.equals("12")) {
@@ -119,13 +105,13 @@ public class CravingActivity extends AppCompatActivity {
                     answer += "11";
                     setQuestionAnswer(QAs, answer1, answer2, answer3, question, 6);
                 } else if (answer.equals("00")) {
-                    answer += "001";
+                    answer += "001"; //ID = 1,2, 7
                 } else if (answer.equals("01")) {
-                    answer += "011";
+                    answer += "011"; //ID = 3,
                 } else if (answer.equals("02")) {
                     answer += "021";
                 } else if (answer.equals("10")) {
-                    answer += "101";
+                    answer += "101"; //ID = 12
                 } else if (answer.equals("11")) {
                     answer += "111";
                 } else if (answer.equals("12")) {
@@ -145,17 +131,17 @@ public class CravingActivity extends AppCompatActivity {
                     answer += "12";
                     setQuestionAnswer(QAs, answer1, answer2, answer3, question, 7);
                 } else if (answer.equals("00")) {
-                    answer += "002";
+                    answer += "002"; //ID = 8,
                 } else if (answer.equals("01")) {
                     answer += "012";
                 } else if (answer.equals("02")) {
-                    answer += "022";
+                    answer += "022"; //ID = 6
                 } else if (answer.equals("10")) {
                     answer += "102";
                 } else if (answer.equals("11")) {
                     answer += "112";
                 } else if (answer.equals("12")) {
-                    answer += "122";
+                    answer += "122"; //ID = 9
                 }
             }
         });
