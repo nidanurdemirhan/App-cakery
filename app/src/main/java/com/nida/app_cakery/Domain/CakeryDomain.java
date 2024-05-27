@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -246,6 +247,7 @@ public class CakeryDomain {
                     }
                 });
     }
+
 /***************************************************************************************************************************************************************************/
 
     public void deleteIngredient() {
@@ -355,22 +357,14 @@ public class CakeryDomain {
                 });
     }
 
-    public void updateStringArrayInTheFirestore(String collectionPath, String ArrayName, ArrayList<String> newIngredientsInInventory) {
+    public void addItemToArrayInFirestoreDb(String collectionPath, String documentPath, String ArrayName, String recipeID){
+        db.collection(collectionPath).document(documentPath)
+                .update(ArrayName, FieldValue.arrayUnion(recipeID));
+    }
 
-        db.collection(collectionPath).document(person.getPersonID())
-                .update(ArrayName, newIngredientsInInventory)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+    public void removeItemFromArrayInFirestoreDb(String collectionPath, String documentPath, String ArrayName, String recipeID){
+        db.collection(collectionPath).document(documentPath)
+                .update(ArrayName, FieldValue.arrayRemove(recipeID));
     }
 
 
@@ -398,4 +392,23 @@ public class CakeryDomain {
     public void setIngredientList(ArrayList<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
     }
+    /*
+    /*public void updateStringArrayInTheFirestore(String collectionPath, String ArrayName, ArrayList<String> newIngredientsInInventory) {
+
+        db.collection(collectionPath).document(person.getPersonID())
+                .update(ArrayName, newIngredientsInInventory)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+     */
 }

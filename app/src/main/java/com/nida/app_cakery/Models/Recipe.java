@@ -8,8 +8,8 @@ public class Recipe {
     private String recipeID, name, description;
     private ArrayList<IngredientInRecipe> ingredientInRecipe;
     private double calorie;
-    private long portion;      //Long yaptım çünkü firebase long kullanıyormuş sadece
-    private String status;    //DEĞİŞTİRDİM ÇÜNKÜ: default, shared, unshared şeklinde olmayacak mı?? sor kızlara değilse değiştir
+    private long portion;
+    private String status;
 
     private String imageUrl;
     public Recipe(String recipeID,String name, String description,

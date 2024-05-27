@@ -145,13 +145,12 @@ public class AddRecipeActivity extends AppCompatActivity {
                 double calorie = Integer.parseInt(etCalorie.getText().toString().trim());
                 long portion = Long.parseLong(portionSpinner.getSelectedItem().toString());
 
-
-                // Create Recipe_Request object
-                Recipe recipeRequest = new Recipe("56789",name, description, ingredientsList, calorie, portion, "unshared", imageUrl);
-                Admin admin = (Admin) CakeryDomain.getInstance().getPerson();
-                admin.getRequestList().add(recipeRequest); // FIRESTOREA EKLENECEK
+                String recipeID = UUID.randomUUID().toString();
+                Recipe recipeRequest = new Recipe(recipeID,name, description, ingredientsList, calorie, portion, "waiting", imageUrl);
                 User user = (User) CakeryDomain.getInstance().getPerson();
-                //user.getMyRecipes().add(recipeRequest); // FIRESTOREA EKLENECEK
+                user.addRecipeToMyRecipeList(recipeRequest);
+                user.addRecipeToAdminRequestList(recipeRequest);
+                finish();
             }
         });
     }
