@@ -70,6 +70,8 @@ public class CravingActivity extends AppCompatActivity {
         if (count == 0) {
             answer3.setVisibility(View.INVISIBLE);
             question.setText(QAs[0][0]);
+            answer1.setText(QAs[0][1]);
+            answer2.setText(QAs[0][2]);
         }
 
         answer1.setOnClickListener(new View.OnClickListener() {
@@ -78,13 +80,13 @@ public class CravingActivity extends AppCompatActivity {
                 answer3.setVisibility(View.VISIBLE);
                 if (answer.equals("")) {
                     answer += "0";
-                    question.setText(QAs[1][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 1);
                 } else if (answer.equals("0")) {
                     answer += "00";
-                    question.setText(QAs[2][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 2);
                 } else if (answer.equals("1")) {
                     answer += "10";
-                    question.setText(QAs[6][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 6);
                 } else if (answer.equals("00")) {
                     answer += "000";
                 } else if (answer.equals("01")) {
@@ -109,13 +111,13 @@ public class CravingActivity extends AppCompatActivity {
 
                 if (answer.equals("")) {
                     answer += "1";
-                    question.setText(QAs[1][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 5);
                 } else if (answer.equals("0")) {
                     answer += "01";
-                    question.setText(QAs[3][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 3);
                 } else if (answer.equals("1")) {
                     answer += "11";
-                    question.setText(QAs[6][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 6);
                 } else if (answer.equals("00")) {
                     answer += "001";
                 } else if (answer.equals("01")) {
@@ -136,13 +138,12 @@ public class CravingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 answer3.setVisibility(View.VISIBLE);
-
                 if (answer.equals("0")) {
                     answer += "02";
-                    question.setText(QAs[4][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 4);
                 } else if (answer.equals("1")) {
                     answer += "12";
-                    question.setText(QAs[7][0]);
+                    setQuestionAnswer(QAs, answer1, answer2, answer3, question, 7);
                 } else if (answer.equals("00")) {
                     answer += "002";
                 } else if (answer.equals("01")) {
@@ -163,13 +164,12 @@ public class CravingActivity extends AppCompatActivity {
             //SONUCU GÖRÜNTÜLE
             count = 0;
         }
-
-
-
-
-
-
     }
 
-
+    private void setQuestionAnswer(String[][] arrayQA, Button ans1, Button ans2, Button ans3, TextView q, int i) {
+        q.setText(arrayQA[i][0]);
+        ans1.setText(arrayQA[i][1]);
+        ans2.setText(arrayQA[i][2]);
+        ans3.setText(arrayQA[i][3]);
+    }
 }
