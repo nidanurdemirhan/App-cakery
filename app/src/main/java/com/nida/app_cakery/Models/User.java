@@ -66,7 +66,7 @@ public class User extends Person {
     public void addRecipeToMyRecipeList(Recipe recipe){
         CakeryDomain.getInstance().addRecipe(recipe);
         myRecipeList.add(recipe);
-        CakeryDomain.getInstance().addItemToArrayInFirestoreDb("User", getPersonID(), "myRecipes", recipe.getRecipeID());
+        CakeryDomain.getInstance().addItemToArrayInFirestoreDb("User", getPersonID(), "myRecipeList", recipe.getRecipeID());
     }
 
     public void addRecipeToAdminRequestList(Recipe recipe){
