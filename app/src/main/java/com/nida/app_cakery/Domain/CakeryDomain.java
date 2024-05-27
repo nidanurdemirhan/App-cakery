@@ -34,7 +34,9 @@ public class CakeryDomain {
 
     //ArrayList<IngredientInRecipe> ingredientInRecipe = new ArrayList<>(); // IngredientInRecipe tablosu kaldırıldı bu yüzden gerekli değil. İlişkili ingredient ve miktarları Recipe tablosuna bakılarak dolduruluyor
     private FirebaseFirestore db;
-    public ArrayList<Recipe> recipeList = new ArrayList<>();
+    public ArrayList<Recipe> allRecipeList = new ArrayList<>();
+    public ArrayList<Recipe> commonRecipeList = new ArrayList<>();
+
     public ArrayList<Ingredient> ingredientList = new ArrayList<>();
 
     private Person person;
@@ -85,7 +87,8 @@ public class CakeryDomain {
     }
 
     public void readRecipes(final FirebaseListener listener){
-        recipeList.clear();
+        allRecipeList.clear();
+        commonRecipeList.clear();
         db.collection("Recipe")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -119,10 +122,13 @@ public class CakeryDomain {
 
                                 Recipe recipe = new Recipe(recipeID, name, description, ingredientInRecipeList, calorie, portion, status, imageUrl);
 
-                                // URL'leri Recipe nesnesine ekleme
                                 recipe.setImageUrl(imageUrl);
 
-                                recipeList.add(recipe);
+                                allRecipeList.add(recipe);
+
+                                if (recipe.getStatus().equals("shared") || recipe.getStatus().equals("default")){
+                                    commonRecipeList.add(recipe);
+                                }
                             }
                             listener.onTaskCompleted();
 
@@ -213,7 +219,7 @@ public class CakeryDomain {
 
                                 ArrayList<String> ingredientsInInventory = (ArrayList<String>) document.get("ingredientsInInventory");
 
-                                person = new User(personID,mailAddress, name, surname, password, recipeList, favoriteRecipesData, myRecipesData, ingredientsInInventory);
+                                person = new User(personID,mailAddress, name, surname, password, allRecipeList, favoriteRecipesData, myRecipesData, ingredientsInInventory);
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 listener.onTaskCompleted();
 
@@ -411,12 +417,12 @@ public class CakeryDomain {
         this.person = person;
     }
 
-    public ArrayList<Recipe> getRecipeList() {
-        return recipeList;
+    public ArrayList<Recipe> getAllRecipeList() {
+        return allRecipeList;
     }
 
-    public void setRecipeList(ArrayList<Recipe> recipeList) {
-        this.recipeList = recipeList;
+    public void setAllRecipeList(ArrayList<Recipe> allRecipeList) {
+        this.allRecipeList = allRecipeList;
     }
 
     public ArrayList<Ingredient> getIngredientList() {
@@ -425,6 +431,13 @@ public class CakeryDomain {
 
     public void setIngredientList(ArrayList<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
+    }
+    public ArrayList<Recipe> getCommonRecipeList() {
+        return commonRecipeList;
+    }
+
+    public void setCommonRecipeList(ArrayList<Recipe> commonRecipeList) {
+        this.commonRecipeList = commonRecipeList;
     }
     /*
     /*public void updateStringArrayInTheFirestore(String collectionPath, String ArrayName, ArrayList<String> newIngredientsInInventory) {

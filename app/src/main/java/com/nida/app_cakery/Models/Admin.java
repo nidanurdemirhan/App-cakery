@@ -9,12 +9,12 @@ public class Admin extends Person {
     private ArrayList<Recipe> requestList;
     public Admin(String personID, String mailAddress, String name, String surname, String password, ArrayList<String> requestListData) {
         super(personID, mailAddress, name, surname, password);
-        this.requestList = new ArrayList<>(); // requestList'i başlatıyoruz
+        this.requestList = new ArrayList<>();
         fillRequestList(requestListData);
     }
 
     public void fillRequestList(ArrayList<String> requestListData){
-        ArrayList<Recipe> allRecipes = CakeryDomain.getInstance().getRecipeList();
+        ArrayList<Recipe> allRecipes = CakeryDomain.getInstance().getAllRecipeList();
 
         for(int i = 0; i< requestListData.size(); i++){
             for(int j= 0; j < allRecipes.size(); j++){
@@ -27,11 +27,11 @@ public class Admin extends Person {
 
     }
     public void confirmRequest(Recipe request){ //onaylarsa request listten çıkar ve shared olarak değiştir
-        request.setStatus("shared"); //bunu silebiliriz bence çünkü bir önceki sayfaya dönünce zaten tekrar okuma yapacak dene bunu bir ama kalsın yine de şimdilik
-        requestList.remove(request);
-        CakeryDomain cd = CakeryDomain.getInstance();
-        cd.removeItemFromArrayInFirestoreDb("Admin", "2gEUqE9NScahNMw12814", "requestList", request.getRecipeID());
-        cd.setDocumentInFirestoreDb("Recipe", request.getRecipeID(), request);
+        request.setStatus("shared");
+        requestList.remove(request);//bunu silebiliriz bence çünkü bir önceki sayfaya dönünce zaten tekrar okuma yapacak dene bunu bir ama kalsın yine de şimdilik
+        //içi boş geliyor olabilir mi? asıl sorun  removeItemFromArrayInFirestoreDb?? KONTROL ET
+        CakeryDomain.getInstance().removeItemFromArrayInFirestoreDb("Admin", "2gEUqE9NScahNMw12814", "requestList", request.getRecipeID());
+        CakeryDomain.getInstance().setDocumentInFirestoreDb("Recipe", request.getRecipeID(), request);
     }
 
     public void rejectRequest(Recipe request){ // red yerse request listten çıkar ve rejected olarak değiştir

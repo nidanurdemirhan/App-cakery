@@ -77,7 +77,7 @@ public class ListActivity extends AppCompatActivity {
             public void onTaskCompleted() {
                 filteredRecipeList.clear();
                 recipeList.clear();
-                ArrayList<Recipe> allRecipes = (CakeryDomain.getInstance()).getRecipeList();
+                ArrayList<Recipe> allRecipes = (CakeryDomain.getInstance()).getCommonRecipeList();
                 for (int i = 0; i < allRecipes.size(); i++) {
                     Recipe recipe = allRecipes.get(i);
                     if (recipe.isIngredientsAvailable()) {

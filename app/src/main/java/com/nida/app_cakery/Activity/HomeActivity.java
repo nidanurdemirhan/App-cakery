@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
             @Override
             public void onTaskCompleted() {
-                recipeList = CakeryDomain.getInstance().getRecipeList();
+                recipeList = CakeryDomain.getInstance().getCommonRecipeList();
                 recipeAdapter = new RecipeAdapter(HomeActivity.this, recipeList);
                 recyclerView.setAdapter(recipeAdapter);
             }

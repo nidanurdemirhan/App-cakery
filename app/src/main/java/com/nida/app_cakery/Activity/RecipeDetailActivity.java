@@ -1,6 +1,5 @@
 package com.nida.app_cakery.Activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,19 +7,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.nida.app_cakery.Adapters.IngredientAdapter;
 import com.nida.app_cakery.Adapters.IngredientInRecipeAdapter;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Models.IngredientInRecipe;
@@ -28,7 +20,6 @@ import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private TextView recipeName, recipeDescription, recipeCalories, recipePortion;
@@ -69,7 +60,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     private void loadRecipeDetails() {
         // CakeryDomain sınıfından recipeList'i al
-        ArrayList<Recipe> recipeList = CakeryDomain.getInstance().getRecipeList();
+        ArrayList<Recipe> recipeList = CakeryDomain.getInstance().getAllRecipeList();
 
         // recipeID'ye göre doğru reçeteyi bul
         Recipe loadedRecipe = null;
