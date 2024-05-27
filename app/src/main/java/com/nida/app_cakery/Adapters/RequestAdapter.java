@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nida.app_cakery.Activity.RecipeDetailActivity;
+import com.nida.app_cakery.Activity.RequestDetailActivity;
 import com.nida.app_cakery.Domain.CakeryDomain;
 import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.Models.User;
@@ -51,7 +52,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RecipeVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, RecipeDetailActivity.class);
+                Intent intent = new Intent(context, RequestDetailActivity.class);
                 intent.putExtra("recipeID", recipe.getRecipeID());
                 context.startActivity(intent);
             }

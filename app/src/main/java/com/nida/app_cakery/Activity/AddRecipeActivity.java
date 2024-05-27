@@ -203,8 +203,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         set.applyTo(newLayout);
 
         // Yeni ConstraintLayout'u iç ConstraintLayout'a ekleyin
-        ConstraintLayout innerLayout = findViewById(R.id.innerConstraintLayout);
-        innerLayout.addView(newLayout);
+        /*ConstraintLayout innerLayout = findViewById(R.id.innerConstraintLayout);
+        innerLayout.addView(newLayout);*/
 
         // Yeni ConstraintLayout'un yerleşimini ayarlayın
        /* ConstraintSet parentSet = new ConstraintSet();
