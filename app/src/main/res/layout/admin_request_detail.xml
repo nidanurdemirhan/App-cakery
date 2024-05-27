@@ -26,7 +26,7 @@
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etImageUrl" />
+                app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
             <EditText
                 android:id="@+id/etDescription"
@@ -36,15 +36,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etName" />
-
-            <EditText
-                android:id="@+id/etImageUrl"
-                android:layout_width="379dp"
-                android:layout_height="wrap_content"
-                android:hint="Image Url"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
             <EditText
                 android:id="@+id/etName"
