@@ -66,11 +66,11 @@ public class RequestDetailActivity extends AppCompatActivity {
         portionSpinner.setAdapter(portionAdapter);
         // Set listeners
         btnConfirm.setOnClickListener(v -> {
-            //confirmRecipe();
+            ((Admin)(CakeryDomain.getInstance()).getPerson()).confirmRequest(loadedRequest);
             finish();  // Navigate back to the previous activity
         });
         btnReject.setOnClickListener(v -> {
-            //rejectRecipe();
+            ((Admin)(CakeryDomain.getInstance()).getPerson()).rejectRequest(loadedRequest);
             finish();  // Navigate back to the previous activity
         });
         btnBack.setOnClickListener(v -> finish());

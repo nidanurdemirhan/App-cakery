@@ -26,7 +26,21 @@ public class Admin extends Person {
         }
 
     }
+    public void confirmRequest(Recipe request){ //onaylarsa request listten çıkar ve shared olarak değiştir
+        request.setStatus("shared"); //bunu silebiliriz bence çünkü bir önceki sayfaya dönünce zaten tekrar okuma yapacak dene bunu bir ama kalsın yine de şimdilik
+        requestList.remove(request);
+        CakeryDomain cd = CakeryDomain.getInstance();
+        cd.removeItemFromArrayInFirestoreDb("Admin", "2gEUqE9NScahNMw12814", "requestList", request.getRecipeID());
+        cd.setDocumentInFirestoreDb("Recipe", request.getRecipeID(), request);
+    }
 
+    public void rejectRequest(Recipe request){ // red yerse request listten çıkar ve rejected olarak değiştir
+        request.setStatus("rejected");
+        requestList.remove(request);
+        CakeryDomain cd = CakeryDomain.getInstance();
+        cd.removeItemFromArrayInFirestoreDb("Admin", "2gEUqE9NScahNMw12814", "requestList", request.getRecipeID());
+        cd.setDocumentInFirestoreDb("Recipe", request.getRecipeID(), request);
+    }
     public ArrayList<Recipe> getRequestList() {
         return requestList;
     }

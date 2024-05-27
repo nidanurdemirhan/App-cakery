@@ -164,8 +164,8 @@ public class CakeryDomain {
 
                                     ArrayList<String> requestListData = new ArrayList<>();
 
-                                    ArrayList<Object> favoriteRecipesObjectList = (ArrayList<Object>) document.get("requestList");
-                                    for (Object recipe : favoriteRecipesObjectList) {
+                                    ArrayList<Object> requestRecipeObjectList = (ArrayList<Object>) document.get("requestList");
+                                    for (Object recipe : requestRecipeObjectList) {
                                         requestListData.add(recipe.toString());
                                     }
 
@@ -365,6 +365,40 @@ public class CakeryDomain {
     public void removeItemFromArrayInFirestoreDb(String collectionPath, String documentPath, String ArrayName, String recipeID){
         db.collection(collectionPath).document(documentPath)
                 .update(ArrayName, FieldValue.arrayRemove(recipeID));
+    }
+
+    public void updateFieldInFirestoreDb(String collectionPath, String documentPath, String field, String newValue){
+        db.collection(collectionPath).document(documentPath)
+                .update(field, newValue)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+
+    public void setDocumentInFirestoreDb(String collectionPath, String documentPath, Recipe request){
+        db.collection(collectionPath).document(documentPath)
+                .set(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
 

@@ -35,16 +35,21 @@ public class AdminHomeActivity extends AppCompatActivity {
         fetchRecipes();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        fetchRecipes();
+    }
+
     private void fetchRecipes() {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
             @Override
             public void onTaskCompleted() {
+
                 requestList = ((Admin)(CakeryDomain.getInstance().getPerson())).getRequestList();
                 requestAdapter = new RequestAdapter(AdminHomeActivity.this, requestList);
                 recyclerView.setAdapter(requestAdapter);
             }
         });
     }
-
-
 }
