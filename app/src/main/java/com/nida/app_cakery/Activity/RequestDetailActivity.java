@@ -2,10 +2,14 @@ package com.nida.app_cakery.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.nida.app_cakery.Adapters.IngredientAdapter;
 import com.nida.app_cakery.Adapters.IngredientInRecipeAdapter;
 import com.nida.app_cakery.Domain.CakeryDomain;
+import com.nida.app_cakery.Models.Admin;
 import com.nida.app_cakery.Models.IngredientInRecipe;
 import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
@@ -34,10 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDetailActivity extends AppCompatActivity {
-    private TextView etName, etCalorie, etDescription, etImageUrl;
+    private EditText etName, etCalorie, etDescription, etImageUrl;
     private Spinner portionSpinner;
-    private TextView ingredientList;
+    private LinearLayout ingredientsContainer;
     private Button btnConfirm, btnReject, btnBack;
+    private String recipeID;
+    private Recipe loadedRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,38 +57,85 @@ public class RequestDetailActivity extends AppCompatActivity {
         etDescription = findViewById(R.id.etDescription);
         etImageUrl = findViewById(R.id.etImageUrl);
         portionSpinner = findViewById(R.id.portionSpinner);
-        ingredientList = findViewById(R.id.ingredientList);
+        ingredientsContainer = findViewById(R.id.ingredientsContainer);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnReject = findViewById(R.id.btnReject);
         btnBack = findViewById(R.id.btnBack);
 
+        ArrayAdapter<String> portionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"1", "2", "4", "8"});
+        portionSpinner.setAdapter(portionAdapter);
         // Set listeners
         btnConfirm.setOnClickListener(v -> {
-            confirmRecipe();
+            //confirmRecipe();
             finish();  // Navigate back to the previous activity
         });
         btnReject.setOnClickListener(v -> {
-            rejectRecipe();
+            //rejectRecipe();
             finish();  // Navigate back to the previous activity
         });
         btnBack.setOnClickListener(v -> finish());
+
+        recipeID = getIntent().getStringExtra("recipeID");
 
         // Populate fields with data from the user (this would typically come from an Intent or database)
         loadRecipeData();
     }
 
     private void loadRecipeData() {
-        // Implement logic to load recipe data (e.g., from Intent extras or a database)
+        ArrayList<Recipe> requestList = ((Admin) (CakeryDomain.getInstance()).getPerson()).getRequestList();
+        loadedRequest = null;
+        for (Recipe request : requestList) {
+            if (request.getRecipeID().equals(recipeID)) {
+                loadedRequest = request;
+                break;
+            }
+        }
+
+        if (loadedRequest != null) {
+            // Populate UI fields with recipe data
+            etName.setText(loadedRequest.getName());
+            etCalorie.setText(String.valueOf(loadedRequest.getCalorie()));
+            etDescription.setText(loadedRequest.getDescription());
+            // etImageUrl.setText(loadedRequest.getImageUrl());
+
+            // Populate the spinner with values and set the selection
+
+
+            // Set ingredient list
+            addIngredientEditTexts(loadedRequest.getIngredientInRecipe());
+        } else {
+            // Handle case when the recipe with the provided ID is not found
+            Log.e("RequestDetailActivity", "Recipe with ID " + recipeID + " not found");
+        }
     }
 
-    private void confirmRecipe() {
-        // Implement logic to confirm the recipe
-    }
+    private void addIngredientEditTexts(List<IngredientInRecipe> ingredients) {
+        for (IngredientInRecipe ingredient : ingredients) {
+            LinearLayout ingredientLayout = new LinearLayout(this);
+            ingredientLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-    private void rejectRecipe() {
-        // Implement logic to reject the recipe
-    }
+            EditText etIngredientName = new EditText(this);
+            etIngredientName.setHint("Ingredient Name");
+            etIngredientName.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+            etIngredientName.setText(ingredient.getIngredient().getName());
+            ingredientLayout.addView(etIngredientName);
 
+            EditText etIngredientAmount = new EditText(this);
+            etIngredientAmount.setHint("Amount");
+            etIngredientAmount.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+            etIngredientAmount.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            etIngredientAmount.setText(String.valueOf(ingredient.getAmount()));
+            ingredientLayout.addView(etIngredientAmount);
+
+            EditText etIngredientUnit = new EditText(this);
+            etIngredientUnit.setHint("Unit");
+            etIngredientUnit.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+            etIngredientUnit.setText(ingredient.getUnit());
+            ingredientLayout.addView(etIngredientUnit);
+
+            ingredientsContainer.addView(ingredientLayout);
+        }
+    }
 
 
 }

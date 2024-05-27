@@ -45,6 +45,11 @@ public class AddActivity extends AppCompatActivity {
         fetchMyRecipeList();
         addActivity();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchMyRecipeList();
+    }
 
     private void fetchMyRecipeList() {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {

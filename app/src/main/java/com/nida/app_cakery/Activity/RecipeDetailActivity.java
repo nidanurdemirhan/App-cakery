@@ -45,7 +45,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Geri düğmesine tıklandığında bir önceki aktiviteye dön
                 finish();
             }
         });
