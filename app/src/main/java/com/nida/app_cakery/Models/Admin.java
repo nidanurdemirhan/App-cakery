@@ -9,6 +9,7 @@ public class Admin extends Person {
     private ArrayList<Recipe> requestList;
     public Admin(String personID, String mailAddress, String name, String surname, String password, ArrayList<String> requestListData) {
         super(personID, mailAddress, name, surname, password);
+        this.requestList = new ArrayList<>(); // requestList'i başlatıyoruz
         fillRequestList(requestListData);
     }
 
@@ -18,11 +19,12 @@ public class Admin extends Person {
         for(int i = 0; i< requestListData.size(); i++){
             for(int j= 0; j < allRecipes.size(); j++){
                 if(requestListData.get(i).equals(allRecipes.get(j).getRecipeID())){
-                    this.requestList.add(allRecipes.get(i));
+                    this.requestList.add(allRecipes.get(j));
                     break;
                 }
             }
         }
+
     }
 
     public ArrayList<Recipe> getRequestList() {
