@@ -51,7 +51,7 @@ public class User extends Person {
 
     public void removeFromFavoriteRecipes(String recipeID){
         favoriteRecipes.remove(findRecipeInTheFavRecipeList(recipeID));
-        CakeryDomain.getInstance().addItemToArrayInFirestoreDb("User", getPersonID(), "favoriteRecipes", recipeID);
+        CakeryDomain.getInstance().removeItemFromArrayInFirestoreDb("User", getPersonID(), "favoriteRecipes", recipeID);
     }
 
     private Recipe findRecipeInTheFavRecipeList(String recipeID){
