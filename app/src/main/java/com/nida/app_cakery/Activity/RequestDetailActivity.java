@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDetailActivity extends AppCompatActivity {
-    private EditText etName, etCalorie, etDescription, etImageUrl;
+    private EditText etName, etCalorie, etDescription;
     private Spinner portionSpinner;
     private LinearLayout ingredientsContainer;
     private Button btnConfirm, btnReject, btnBack;
@@ -51,11 +51,9 @@ public class RequestDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_request_detail);
 
-        // Initialize views
         etName = findViewById(R.id.etName);
         etCalorie = findViewById(R.id.etCalorie);
         etDescription = findViewById(R.id.etDescription);
-        etImageUrl = findViewById(R.id.etImageUrl);
         portionSpinner = findViewById(R.id.portionSpinner);
         ingredientsContainer = findViewById(R.id.ingredientsContainer);
         btnConfirm = findViewById(R.id.btnConfirm);
@@ -64,26 +62,28 @@ public class RequestDetailActivity extends AppCompatActivity {
 
         ArrayAdapter<String> portionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"1", "2", "4", "8"});
         portionSpinner.setAdapter(portionAdapter);
-        // Set listeners
+
         btnConfirm.setOnClickListener(v -> {
             ((Admin)(CakeryDomain.getInstance()).getPerson()).confirmRequest(loadedRequest);
-            finish();  // Navigate back to the previous activity
+            finish();
         });
+
         btnReject.setOnClickListener(v -> {
             ((Admin)(CakeryDomain.getInstance()).getPerson()).rejectRequest(loadedRequest);
-            finish();  // Navigate back to the previous activity
+            finish();
         });
+
         btnBack.setOnClickListener(v -> finish());
 
         recipeID = getIntent().getStringExtra("recipeID");
 
-        // Populate fields with data from the user (this would typically come from an Intent or database)
-        loadRecipeData();
+       loadRecipeData();
     }
 
     private void loadRecipeData() {
         ArrayList<Recipe> requestList = ((Admin) (CakeryDomain.getInstance()).getPerson()).getRequestList();
         loadedRequest = null;
+
         for (Recipe request : requestList) {
             if (request.getRecipeID().equals(recipeID)) {
                 loadedRequest = request;
@@ -92,19 +92,12 @@ public class RequestDetailActivity extends AppCompatActivity {
         }
 
         if (loadedRequest != null) {
-            // Populate UI fields with recipe data
             etName.setText(loadedRequest.getName());
             etCalorie.setText(String.valueOf(loadedRequest.getCalorie()));
             etDescription.setText(loadedRequest.getDescription());
-            // etImageUrl.setText(loadedRequest.getImageUrl());
 
-            // Populate the spinner with values and set the selection
-
-
-            // Set ingredient list
             addIngredientEditTexts(loadedRequest.getIngredientInRecipe());
         } else {
-            // Handle case when the recipe with the provided ID is not found
             Log.e("RequestDetailActivity", "Recipe with ID " + recipeID + " not found");
         }
     }
