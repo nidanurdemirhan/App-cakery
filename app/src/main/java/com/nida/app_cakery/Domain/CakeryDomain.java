@@ -201,7 +201,7 @@ public class CakeryDomain {
                                 ArrayList<String> myRecipesData = new ArrayList<>();
                                 ArrayList<String> favoriteRecipesData = new ArrayList<>();
 
-                                ArrayList<Object> myRecipesObjectList = (ArrayList<Object>) document.get("myRecipes");
+                                ArrayList<Object> myRecipesObjectList = (ArrayList<Object>) document.get("myRecipeList");
                                 for (Object recipe : myRecipesObjectList) {
                                     myRecipesData.add(recipe.toString());
                                 }
