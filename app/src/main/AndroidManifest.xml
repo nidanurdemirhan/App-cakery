@@ -42,8 +42,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.RecipeDetailActivity" />
-        <activity android:name=".Activity.RequestDetailActivity" />
-        <activity android:name=".Activity.AdminHomeActivity" />
+        <activity android:name=".Activity.CravingActivity" />
         <activity android:name=".Activity.CartActivity" />
         <activity android:name=".Activity.FavoriteActivity" />
         <activity android:name=".Activity.AddActivity" />
