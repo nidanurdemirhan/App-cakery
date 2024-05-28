@@ -65,43 +65,45 @@ public class CravingResultActivity extends AppCompatActivity {
         ArrayList<Recipe> resultRecipes = new ArrayList<>();
         answer = CravingActivity.answer;
         for (int i = 0; i < allRecipes.size(); i++) {
-            if (answer.equals("000")) { //CUPCAKE
-
-            } else if (answer.equals("010")) { //KURU YEMİŞLİ KURABİYE
-
-            } else if (answer.equals("020")) { //TARTALET
-
-            } else if (answer.equals("100")) { //PEYNİRLİ BÖREK
-
-            } else if (answer.equals("110")) { //PEYNİRLİ POĞAÇA
-
-            } else if (answer.equals("120")) { //KRAKER
-
-            } else if (answer.equals("001") && (allRecipes.get(i).getRecipeID().equals("1") ||
-                    allRecipes.get(i).getRecipeID().equals("2"))) { //PASTA KEK = 1, 2
+            if (answer.equals("000") && allRecipes.get(i).getRecipeID().equals("11")) { //CUPCAKE = 11
                 resultRecipes.add(allRecipes.get(i));
-            } else if (answer.equals("011")) { //ÇİKOLATALI KURABİYE
-
-            } else if (answer.equals("021")) { //ŞERBETLİ TATLI
-
-            } else if (answer.equals("101")) { //SEBZELİ BÖREK
-
-            } else if (answer.equals("111")) { //SEBZELİ POĞAÇA
-
-            } else if (answer.equals("121")) { //SİMİT
-
-            } else if (answer.equals("002")) { //CHEESECAKE
-
-            } else if (answer.equals("012")) { //MEYVELİ KURABİYE
-
-            } else if (answer.equals("022")) { //SÜTLÜ TATLI
-
-            } else if (answer.equals("102")) { //KIYMALI BÖREK
-
-            } else if (answer.equals("112")) { //KIYMALI POĞAÇA
-
-            } else if (answer.equals("122")) { //GALETA
-
+            } else if (answer.equals("010") && allRecipes.get(i).getRecipeID().equals("14")) { //KURU YEMİŞLİ KURABİYE = 14
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("020") && allRecipes.get(i).getRecipeID().equals("4")) { //TARTALET = 4
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("100") && allRecipes.get(i).getRecipeID().equals("12")) { //PEYNİRLİ BÖREK = 12
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("110") && (allRecipes.get(i).getRecipeID().equals("5")
+                    || allRecipes.get(i).getRecipeID().equals("18"))) { //PEYNİRLİ POĞAÇA = 5, 18
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("120") && allRecipes.get(i).getRecipeID().equals("19")) { //KRAKER = 19
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("001") && (allRecipes.get(i).getRecipeID().equals("1") ||
+                    allRecipes.get(i).getRecipeID().equals("2") || allRecipes.get(i).getRecipeID().equals("7"))) { //PASTA KEK = 1, 2, 7
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("011") && allRecipes.get(i).getRecipeID().equals("3")) { //ÇİKOLATALI KURABİYE = 3
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("021") && allRecipes.get(i).getRecipeID().equals("16")) { //ŞERBETLİ TATLI = 16
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("101") && (allRecipes.get(i).getRecipeID().equals("12")
+                    || allRecipes.get(i).getRecipeID().equals("15"))) { //SEBZELİ BÖREK = 12, 15
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("111") && allRecipes.get(i).getRecipeID().equals("18")) { //SEBZELİ POĞAÇA = 18
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("121") && allRecipes.get(i).getRecipeID().equals("9")) { //SİMİT = 9
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("002") && allRecipes.get(i).getRecipeID().equals("8")) { //CHEESECAKE = 8
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("012") && allRecipes.get(i).getRecipeID().equals("17")) { //MEYVELİ KURABİYE = 17
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("022") && allRecipes.get(i).getRecipeID().equals("6")) { //SÜTLÜ TATLI = 6
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("102") && allRecipes.get(i).getRecipeID().equals("13")) { //KIYMALI BÖREK = 13
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("112") && allRecipes.get(i).getRecipeID().equals("20")) { //KIYMALI POĞAÇA = 20
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("122") && allRecipes.get(i).getRecipeID().equals("10")) { //GALETA = 10
+                resultRecipes.add(allRecipes.get(i));
             }
         }
         return resultRecipes;
