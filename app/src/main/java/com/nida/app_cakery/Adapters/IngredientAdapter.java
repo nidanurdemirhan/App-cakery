@@ -20,21 +20,10 @@ import java.util.ArrayList;
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
     private Context context;
     private ArrayList<Ingredient> ingredients;
-    private ArrayList<Boolean> ingredientStatus;
 
     public IngredientAdapter(Context context, ArrayList<Ingredient> ingredients) {
-        //normal ingredients taraması yaparken aynı zamanda inventoryde var mı yok mu ona bakıcam sonrası allah kerim :)
         this.context = context;
         this.ingredients = ingredients;
-        this.ingredientStatus = new ArrayList<>(ingredients.size());
-        ArrayList<String> ingredientsInInventory = ((User) (CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
-        for (int i = 0; i < ingredients.size(); i++) {
-            if (ingredientsInInventory.contains(ingredients.get(i).getIngredientID())){
-                ingredientStatus.add(true);
-            } else{
-                ingredientStatus.add(false);
-            }
-        }
     }
 
     @NonNull
@@ -46,17 +35,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
+        User user = ((User)(CakeryDomain.getInstance().getPerson()));
         Ingredient ingredient = ingredients.get(position);
         holder.ingredientName.setText(ingredient.getName());
-        holder.ingredientCheckbox.setChecked(ingredientStatus.get(position));
+        holder.ingredientCheckbox.setChecked(user.getIngredientStatus().get(position));
 
         holder.ingredientCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             int adapterPos = holder.getAdapterPosition();
-            ingredientStatus.set(adapterPos, isChecked);
+            user.getIngredientStatus().set(adapterPos, isChecked);
 
             String ingredientID = ingredients.get(adapterPos).getIngredientID();
-            User user = ((User) (CakeryDomain.getInstance().getPerson()));
-            if(ingredientStatus.get(adapterPos)) {
+            if(user.getIngredientStatus().get(adapterPos)) {
                 user.addIngredientToInventory(ingredientID);
             } else{
                 user.removeIngredientFromInventory(ingredientID);

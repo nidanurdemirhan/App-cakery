@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class User extends Person {
     private ArrayList<String> ingredientsInInventory = new ArrayList<>();
 
+    private ArrayList<Boolean> ingredientStatus = new ArrayList<>();
+
 
     private ArrayList<Recipe> myRecipeList = new ArrayList<>();
     private ArrayList<Recipe> favoriteRecipes = new ArrayList<>();
@@ -14,6 +16,7 @@ public class User extends Person {
         super(personID, mailAddress, name, surname, password);
         this.ingredientsInInventory = ingredientsInInventory;
         fillRecipeLists(allRecipes,myRecipesData,favoriteRecipesData);
+        fillIngredientStatusList();
     }
 
     public User(String personID, String mailAddress, String name, String surname, String password ) { //Registration
@@ -29,6 +32,17 @@ public class User extends Person {
         for(int i=0;i<allRecipes.size();i++){
             if(favoriteList.contains(allRecipes.get(i).getRecipeID())){
                 this.favoriteRecipes.add(allRecipes.get(i));
+            }
+        }
+    }
+
+    public void fillIngredientStatusList(){
+        ArrayList<Ingredient> ingredients = CakeryDomain.getInstance().getIngredientList();
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (ingredientsInInventory.contains(ingredients.get(i).getIngredientID())){
+                ingredientStatus.add(true);
+            } else{
+                ingredientStatus.add(false);
             }
         }
     }
@@ -95,6 +109,14 @@ public class User extends Person {
 
     public void setIngredientsInInventory(ArrayList<String> ingredientsInInventory) {
         this.ingredientsInInventory = ingredientsInInventory;
+    }
+
+    public ArrayList<Boolean> getIngredientStatus() {
+        return ingredientStatus;
+    }
+
+    public void setIngredientStatus(ArrayList<Boolean> ingredientStatus) {
+        this.ingredientStatus = ingredientStatus;
     }
 
     /*

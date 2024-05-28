@@ -57,9 +57,7 @@ public class CakeryDomain {
         return instance;
     }
 
-    //ValueEventListener versiyonunda data değişince otomatik tetikleniyor, bunu bir araştır
     public void readIngredients(final FirebaseListener listener) {
-        ingredientList.clear();
         db.collection("Ingredient")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

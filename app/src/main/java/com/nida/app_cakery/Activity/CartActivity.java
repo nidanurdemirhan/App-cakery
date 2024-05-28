@@ -27,14 +27,10 @@ public class CartActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CakeryDomain.getInstance().readIngredients(new FirebaseListener() {
-            @Override
-            public void onTaskCompleted() {
-                ArrayList<Ingredient> ingredients = CakeryDomain.getInstance().getIngredientList();
-                IngredientAdapter adapter = new IngredientAdapter(CartActivity.this, ingredients);
-                recyclerView.setAdapter(adapter);
-            }
-        });
+
+        ArrayList<Ingredient> ingredients = CakeryDomain.getInstance().getIngredientList();
+        IngredientAdapter adapter = new IngredientAdapter(CartActivity.this, ingredients);
+        recyclerView.setAdapter(adapter);
 
         CartActivity();
     }
