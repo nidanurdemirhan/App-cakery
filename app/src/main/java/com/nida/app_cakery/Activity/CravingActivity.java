@@ -6,9 +6,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nida.app_cakery.Adapters.RecipeAdapter;
+import com.nida.app_cakery.Domain.CakeryDomain;
+import com.nida.app_cakery.Listeners.FirebaseListener;
+import com.nida.app_cakery.Models.Recipe;
 import com.nida.app_cakery.R;
 
+import java.util.ArrayList;
+
 public class CravingActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private RecipeAdapter recipeAdapter;
+    private ArrayList<Recipe> recipeList = new ArrayList<>();
     private String answer = "";
     private int count = 0;
 
@@ -87,6 +100,10 @@ public class CravingActivity extends AppCompatActivity {
                     answer += "120";
                 }
                 count++;
+                if (count == 3) {
+                    setResult();
+                    count = 0;
+                }
             }
 
         });
@@ -118,6 +135,10 @@ public class CravingActivity extends AppCompatActivity {
                     answer += "121";
                 }
                 count++;
+                if (count == 3) {
+                    setResult();
+                    count = 0;
+                }
             }
         });
         answer3.setOnClickListener(new View.OnClickListener() {
@@ -143,13 +164,88 @@ public class CravingActivity extends AppCompatActivity {
                 } else if (answer.equals("12")) {
                     answer += "122"; //ID = 9
                 }
+                count++;
+                if (count == 3) {
+                    setResult();
+                    count = 0;
+                }
             }
         });
+    }
 
-        if (count == 3) {
-            //SONUCU GÖRÜNTÜLE
-            count = 0;
+    private void setResult() {
+        setContentView(R.layout.craving_test_result);
+        recyclerView = findViewById(R.id.recyclerViewTEST);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        ImageButton btnCart = findViewById(R.id.btnCart);
+        ImageButton btnFav = findViewById(R.id.btnFavorites);
+        ImageButton btnHome = findViewById(R.id.btnHome);
+        ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
+        ImageButton btnList = findViewById(R.id.btnAllRecipes);
+        Button btnReturn = findViewById(R.id.btnTestReturn);
+
+        btnReturn.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, HomeActivity.class)));
+        btnCart.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, CartActivity.class)));
+        btnFav.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, FavoriteActivity.class)));
+        btnHome.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, HomeActivity.class)));
+        btnAdd.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, AddActivity.class)));
+        btnList.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, ListActivity.class)));
+
+
+        CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
+            @Override
+            public void onTaskCompleted() {
+                recipeList = CakeryDomain.getInstance().getCommonRecipeList();
+                recipeAdapter = new RecipeAdapter(CravingActivity.this, getRecipes(recipeList));
+                recyclerView.setAdapter(recipeAdapter);
+            }
+        });
+    }
+
+    private ArrayList<Recipe> getRecipes(ArrayList<Recipe> allRecipes) {
+        ArrayList<Recipe> resultRecipes = new ArrayList<>();
+        for (int i = 0; i < allRecipes.size(); i++) {
+            if (answer.equals("000") && allRecipes.get(i).getRecipeID().equals("1")) { //CUPCAKE
+
+            } else if (answer.equals("010")) { //KURU YEMİŞLİ KURABİYE
+
+            } else if (answer.equals("020")) { //TARTALET
+
+            } else if (answer.equals("100")) { //PEYNİRLİ BÖREK
+
+            } else if (answer.equals("110")) { //PEYNİRLİ POĞAÇA
+
+            } else if (answer.equals("120")) { //KRAKER
+
+            } else if (answer.equals("001") && (allRecipes.get(i).getRecipeID().equals("1") ||
+                    allRecipes.get(i).getRecipeID().equals("2"))) { //PASTA KEK
+                resultRecipes.add(allRecipes.get(i));
+            } else if (answer.equals("011") && allRecipes.get(i).getRecipeID().equals("3")) { //ÇİKOLATALI KURABİYE
+
+            } else if (answer.equals("021")) { //ŞERBETLİ TATLI
+
+            } else if (answer.equals("101")) { //SEBZELİ BÖREK
+
+            } else if (answer.equals("111")) { //SEBZELİ POĞAÇA
+
+            } else if (answer.equals("121")) { //SİMİT
+
+            } else if (answer.equals("002")) { //CHEESECAKE
+
+            } else if (answer.equals("012")) { //MEYVELİ KURABİYE
+
+            } else if (answer.equals("022")) { //SÜTLÜ TATLI
+
+            } else if (answer.equals("102")) { //KIYMALI BÖREK
+
+            } else if (answer.equals("112")) { //KIYMALI POĞAÇA
+
+            } else if (answer.equals("122")) { //GALETA
+
+            }
         }
+        return allRecipes;
     }
 
     private void setQuestionAnswer(String[][] arrayQA, Button ans1, Button ans2, Button ans3, TextView q, int i) {
