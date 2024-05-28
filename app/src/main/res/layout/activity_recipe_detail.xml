@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.RecipeDetailActivity">
+    tools:context=".Activity.RecipeDetailActivity"
+    android:background="#ebddeb">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,11 +14,14 @@
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="104dp"
+            android:backgroundTint="#341136"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Geri" />
+            android:layout_margin="10dp"
+            android:text="Return"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <ImageView
             android:id="@+id/recipe_image"

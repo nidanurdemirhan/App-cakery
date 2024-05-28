@@ -5,7 +5,8 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AddRecipeActivity">
+    tools:context=".Activity.AddRecipeActivity"
+    android:background="#ebddeb">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/innerConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <EditText
                 android:id="@+id/etCalorie"
@@ -103,7 +104,7 @@
             <EditText
                 android:id="@+id/etUnit"
                 android:layout_width="80dp"
-                android:layout_height="41dp"
+                android:layout_height="44dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:hint="Unit"
@@ -117,6 +118,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:text="Add Ingredient"
+                android:backgroundTint="#341136"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredientSpinner" />
 
@@ -126,6 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="180dp"
                 android:text="Send"
+                android:backgroundTint="#341136"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.687"
                 app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +139,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="180dp"
-                android:text="Submit"
+                android:text="Save"
+                android:backgroundTint="#341136"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.261"
                 app:layout_constraintStart_toStartOf="parent"
@@ -144,10 +148,14 @@
 
             <Button
                 android:id="@+id/btnBack"
+                android:backgroundTint="#341136"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Geri"
-                tools:ignore="MissingConstraints" />
+                android:layout_margin="10dp"
+                android:text="Return"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                 />
 
             <TextView
                 android:id="@+id/ingredientList"

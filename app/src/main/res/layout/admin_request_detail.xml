@@ -5,7 +5,8 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AddRecipeActivity">
+    tools:context=".Activity.AddRecipeActivity"
+    android:background="#ebddeb">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -74,38 +75,43 @@
             <LinearLayout
                 android:id="@+id/ingredientsContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/portionSpinner" />
 
             <Button
                 android:id="@+id/btnConfirm"
-                android:layout_width="wrap_content"
+                android:backgroundTint="#341136"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Confirm"
-                app:layout_constraintEnd_toStartOf="@+id/btnReject"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginStart="60dp"
+                android:layout_marginVertical="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredientsContainer" />
 
             <Button
                 android:id="@+id/btnReject"
-                android:layout_width="wrap_content"
+                android:layout_width="110dp"
+                android:layout_marginVertical="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="108dp"
+                android:backgroundTint="#341136"
                 android:text="Reject"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnConfirm"
                 app:layout_constraintTop_toBottomOf="@+id/ingredientsContainer" />
 
             <Button
                 android:id="@+id/btnBack"
+                android:backgroundTint="#341136"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Geri"
-                tools:ignore="MissingConstraints" />
+                android:layout_margin="10dp"
+                android:text="Return"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
