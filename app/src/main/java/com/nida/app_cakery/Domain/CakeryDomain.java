@@ -152,7 +152,7 @@ public class CakeryDomain {
 
     /************************************************************* USER-FIREBASE PROCESSES ****************************************************************************/
 
-    public void fetchPerson(String email, String password, FirebaseListener listener) {
+    public void fetchPerson(String email, FirebaseListener listener) {
         db.collection("Admin")
                 .whereEqualTo("mailAddress", email)
                 .get()
@@ -181,7 +181,7 @@ public class CakeryDomain {
 
                                 }
                             }else{
-                                fetchUser(email, password, listener);
+                                fetchUser(email, listener);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -189,7 +189,35 @@ public class CakeryDomain {
                     }
                 });
     }
-    private void fetchUser(String email, String password, FirebaseListener listener){ //pasword alınmamalı firebaseden çekilöeli: güvenlik
+
+    public void updateRequestListData(String email, FirebaseListener listener){
+        db.collection("Admin")
+                .whereEqualTo("mailAddress", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                    ArrayList<String> requestListData = new ArrayList<>();
+                                    ArrayList<Object> requestRecipeObjectList = (ArrayList<Object>) document.get("requestList");
+                                    for (Object recipe : requestRecipeObjectList) {
+                                        requestListData.add(recipe.toString());
+                                    }
+                                    ((Admin)(person)).fillRequestList(requestListData);
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    listener.onTaskCompleted();
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    private void fetchUser(String email, FirebaseListener listener){ //pasword alınmamalı firebaseden çekilöeli: güvenlik
         db.collection("User")
                 .whereEqualTo("mailAddress", email)
                 .get()
