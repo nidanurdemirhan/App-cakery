@@ -14,11 +14,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    <LinearLayout
+        android:id="@+id/llSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/topBarHome"
+        app:layout_constraintBottom_toTopOf="@id/scrollviewhome"
+        android:background="@drawable/layout_frame"
+        android:layout_margin="5dp"
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/search"
+            />
+        <EditText
+            android:id="@+id/searchbarhome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            >
+        </EditText>
+
+
+
+    </LinearLayout>
+
 
     <ScrollView
+        android:id="@+id/scrollviewhome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/topBarHome"
+        app:layout_constraintTop_toBottomOf="@id/llSearchBar"
         app:layout_constraintBottom_toTopOf="@id/bottomBarHome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -26,13 +55,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <Button
-                android:id="@+id/btnCravingTest"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/craveTestLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="15dp"
-                android:text="What Do You Crave For?" />
+                android:background="@drawable/layout_frame"
+                android:layout_margin="5dp">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/test"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="Don't know which one to choose?"
+                    android:textSize="18sp"
+                    android:textStyle="bold">
+                </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Take a test to know what you're craving for!"
+                        android:textSize="16sp"
+                        >
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"

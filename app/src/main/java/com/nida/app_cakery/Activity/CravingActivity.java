@@ -30,6 +30,8 @@ public class CravingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.craving_test_page);
+        answer = "";
+        count = 0;
         setUpNavigationButtons();
         questionAndAnswer();
     }
@@ -40,9 +42,7 @@ public class CravingActivity extends AppCompatActivity {
         ImageButton btnHome = findViewById(R.id.btnHome);
         ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
         ImageButton btnList = findViewById(R.id.btnAllRecipes);
-        Button btnReturn = findViewById(R.id.btnTestReturn);
 
-        btnReturn.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, HomeActivity.class)));
         btnCart.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, CartActivity.class)));
         btnFav.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, FavoriteActivity.class)));
         btnHome.setOnClickListener(v -> startActivity(new Intent(CravingActivity.this, HomeActivity.class)));
@@ -104,7 +104,6 @@ public class CravingActivity extends AppCompatActivity {
                 if (count == 3) {
                     Intent intent = new Intent(CravingActivity.this, CravingResultActivity.class);
                     startActivity(intent);
-                    count = 0;
                 }
             }
 
@@ -113,7 +112,6 @@ public class CravingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 answer3.setVisibility(View.VISIBLE);
-
                 if (answer.equals("")) {
                     answer = "1";
                     setQuestionAnswer(QAs, answer1, answer2, answer3, question, 5);
@@ -140,7 +138,7 @@ public class CravingActivity extends AppCompatActivity {
                 if (count == 3) {
                     Intent intent = new Intent(CravingActivity.this, CravingResultActivity.class);
                     startActivity(intent);
-                    count = 0;
+
                 }
             }
         });
@@ -171,7 +169,6 @@ public class CravingActivity extends AppCompatActivity {
                 if (count == 3) {
                     Intent intent = new Intent(CravingActivity.this, CravingResultActivity.class);
                     startActivity(intent);
-                    count = 0;
                 }
             }
         });

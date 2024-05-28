@@ -83,7 +83,7 @@ public class CravingResultActivity extends AppCompatActivity {
                 resultRecipes.add(allRecipes.get(i));
             } else if (answer.equals("011") && allRecipes.get(i).getRecipeID().equals("3")) { //ÇİKOLATALI KURABİYE = 3
                 resultRecipes.add(allRecipes.get(i));
-            } else if (answer.equals("021") && allRecipes.get(i).getRecipeID().equals("16")) { //ŞERBETLİ TATLI = 16
+            } else if (answer.equals("021") && allRecipes.get(i).getRecipeID().equals("6")) { //ŞERBETLİ TATLI = 6
                 resultRecipes.add(allRecipes.get(i));
             } else if (answer.equals("101") && (allRecipes.get(i).getRecipeID().equals("12")
                     || allRecipes.get(i).getRecipeID().equals("15"))) { //SEBZELİ BÖREK = 12, 15
@@ -96,7 +96,7 @@ public class CravingResultActivity extends AppCompatActivity {
                 resultRecipes.add(allRecipes.get(i));
             } else if (answer.equals("012") && allRecipes.get(i).getRecipeID().equals("17")) { //MEYVELİ KURABİYE = 17
                 resultRecipes.add(allRecipes.get(i));
-            } else if (answer.equals("022") && allRecipes.get(i).getRecipeID().equals("6")) { //SÜTLÜ TATLI = 6
+            } else if (answer.equals("022") && allRecipes.get(i).getRecipeID().equals("16")) { //SÜTLÜ TATLI = 16
                 resultRecipes.add(allRecipes.get(i));
             } else if (answer.equals("102") && allRecipes.get(i).getRecipeID().equals("13")) { //KIYMALI BÖREK = 13
                 resultRecipes.add(allRecipes.get(i));

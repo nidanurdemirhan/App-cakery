@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,9 +53,9 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton btnHome = findViewById(R.id.btnHome);
         ImageButton btnAdd = findViewById(R.id.btnMyRecipes);
         ImageButton btnList = findViewById(R.id.btnAllRecipes);
-        Button btnTest = findViewById(R.id.btnCravingTest);
+        LinearLayout llTest = findViewById(R.id.craveTestLayout);
 
-        btnTest.setOnClickListener(new View.OnClickListener() {
+        llTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, CravingActivity.class));

@@ -2,33 +2,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:id="@+id/topBarHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="#341136"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:text="Cakery \nWelcome" />
 
+            android:text="CAKERY"
+            android:textSize="30sp"
+            android:textStyle="italic|bold"
+            android:fontFamily="cursive"
+            android:textColor="@color/white"/>
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="               ~ Baked with Love "
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:fontFamily="cursive"
+            android:textColor="@color/white"/>
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/avatar_icon_png"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            android:layout_gravity="center"
+            android:src="@drawable/cake"
             />
+
+
 
     </LinearLayout>
 
