@@ -82,12 +82,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                 if (favStatusOfRecipes.get(position)) {
                     holder.heartIcon.setImageResource(R.drawable.filled_heart);
                     user.addToFavoriteRecipes(recipe);
-
                 } else {
                     holder.heartIcon.setImageResource(R.drawable.empty_heart);
                     user.removeFromFavoriteRecipes(recipe.getRecipeID());
                 }
-                notifyItemChanged(position);
+                //notifyItemChanged(position);
+                determineFavStatusOfRecipe(recipeList);
+                notifyDataSetChanged();
 
             }
         });
