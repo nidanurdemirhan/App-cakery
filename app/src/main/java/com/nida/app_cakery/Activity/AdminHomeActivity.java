@@ -45,10 +45,18 @@ public class AdminHomeActivity extends AppCompatActivity {
         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
             @Override
             public void onTaskCompleted() {
+                //update list
+                CakeryDomain ck = CakeryDomain.getInstance();
+                Admin admin = ((Admin)(ck).getPerson());
+                ck.updateRequestListData(admin.getMailAddress(), new FirebaseListener() {
+                    @Override
+                    public void onTaskCompleted() {
+                        requestList = (admin.getRequestList());
 
-                requestList = ((Admin)(CakeryDomain.getInstance().getPerson())).getRequestList();
-                requestAdapter = new RequestAdapter(AdminHomeActivity.this, requestList);
-                recyclerView.setAdapter(requestAdapter);
+                        requestAdapter = new RequestAdapter(AdminHomeActivity.this, requestList);
+                        recyclerView.setAdapter(requestAdapter);
+                    }
+                });
             }
         });
     }

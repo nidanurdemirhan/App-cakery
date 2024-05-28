@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                         CakeryDomain.getInstance().readRecipes(new FirebaseListener() {
                                             @Override
                                             public void onTaskCompleted() {
-                                                CakeryDomain.getInstance().fetchPerson(email, password, new FirebaseListener() {
+                                                CakeryDomain.getInstance().fetchPerson(email, new FirebaseListener() {
                                                     @Override
                                                     public void onTaskCompleted() {
                                                         CakeryDomain cakeryDomain = CakeryDomain.getInstance();
