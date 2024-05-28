@@ -4,13 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ebddeb">
+
 
     <LinearLayout
+        android:id="@+id/loginLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="0dp"
         android:background="@drawable/layout_frame"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -93,10 +95,11 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
+                android:backgroundTint="#341136"
+                android:text="Login"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -106,13 +109,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="80dp"
-                android:text="Sign Up"
                 android:layout_marginBottom="20dp"
+                android:backgroundTint="#341136"
+                android:text="Sign Up"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
+
+
     </LinearLayout>
+
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="255dp"
+        android:fontFamily="cursive"
+        android:text="CAKERY"
+        android:textColor="#341136"
+        android:textSize="50sp"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toTopOf="@+id/loginLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/cake"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="100dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="cursive"
+        android:text="~Baked with Love "
+        android:textColor="#341136"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

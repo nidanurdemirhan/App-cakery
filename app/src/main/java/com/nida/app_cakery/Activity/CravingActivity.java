@@ -52,24 +52,26 @@ public class CravingActivity extends AppCompatActivity {
 
     private void questionAndAnswer() {
         String[][] QAs = {
-                {"Sweet or Salt?", "Sweet", "Salt"}, //""
-                {"Cake, Cookie or Other?", "Cake", "Cookie", "Other?"}, //0
-                {"Cupcake, Cake, Cheesecake?", "Cupcake", "Cake", "Cheesecake"}, //00
-                {"Nuts, Chocolate or Fruits?", "Nuts", "Chocolate", "Fruit"}, //01
-                {"Tartlet, Pudding, or Siruped?", "Tartlet", "Pudding", "Siruped"}, //02
-                {"Patty, Pastry Bun or Snacks?", "Patty", "Pastry Bun", "Snacks"}, //1
-                {"Cheese, Vegetables or Meat?", "Cheese", "Vegetables", "Meat"}, //10, 11
-                {"Cracker, Bagel or Rusk?", "Cracker", "Bagel", "Rusk"} //12
+                {"What would you prefer:\nSweet or Salt?", "Sweet", "Salt"}, //""
+                {"What would you prefer:\nCake, Cookie or Other?", "Cake", "Cookie", "Other"}, //0
+                {"What would you prefer:\nCupcake, Cake, Cheesecake?", "Cupcake", "Cake", "Cheesecake"}, //00
+                {"What would you prefer:\nNuts, Chocolate or Fruits?", "Nuts", "Chocolate", "Fruit"}, //01
+                {"What would you prefer:\nTartlet, Pudding, or Siruped?", "Tartlet", "Pudding", "Siruped"}, //02
+                {"What would you prefer:\nPatty, Pastry Bun or Snacks?", "Patty", "Pastry Bun", "Snacks"}, //1
+                {"What would you prefer:\nCheese, Vegetables or Meat?", "Cheese", "Vegetables", "Meat"}, //10, 11
+                {"What would you prefer:\nCracker, Bagel or Rusk?", "Cracker", "Bagel", "Rusk"} //12
         };
 
         Button answer1 = findViewById(R.id.btnTestAnswer1);
         Button answer2 = findViewById(R.id.btnTestAnswer2);
         Button answer3 = findViewById(R.id.btnTestAnswer3);
         TextView question = findViewById(R.id.tvQuestion);
+        TextView questionNumber = findViewById(R.id.tvQuestionNumber);
 
         if (count == 0) {
             answer3.setVisibility(View.INVISIBLE);
             question.setText(QAs[0][0]);
+            questionNumber.setText("Question 1");
             answer1.setText(QAs[0][1]);
             answer2.setText(QAs[0][2]);
         }
@@ -101,7 +103,12 @@ public class CravingActivity extends AppCompatActivity {
                     answer = "120";
                 }
                 count++;
-                if (count == 3) {
+                if (count == 1) {
+                    questionNumber.setText("Question 2");
+                } else if (count == 2) {
+                    questionNumber.setText("Question 3");
+                }
+                else if (count == 3) {
                     Intent intent = new Intent(CravingActivity.this, CravingResultActivity.class);
                     startActivity(intent);
                 }
@@ -135,10 +142,14 @@ public class CravingActivity extends AppCompatActivity {
                     answer = "121";
                 }
                 count++;
-                if (count == 3) {
+                if (count == 1) {
+                    questionNumber.setText("Question 2");
+                } else if (count == 2) {
+                    questionNumber.setText("Question 3");
+                }
+                else if (count == 3) {
                     Intent intent = new Intent(CravingActivity.this, CravingResultActivity.class);
                     startActivity(intent);
-
                 }
             }
         });
@@ -166,7 +177,12 @@ public class CravingActivity extends AppCompatActivity {
                     answer = "122"; //ID = 9
                 }
                 count++;
-                if (count == 3) {
+                if (count == 1) {
+                    questionNumber.setText("Question 2");
+                } else if (count == 2) {
+                    questionNumber.setText("Question 3");
+                }
+                else if (count == 3) {
                     Intent intent = new Intent(CravingActivity.this, CravingResultActivity.class);
                     startActivity(intent);
                 }
