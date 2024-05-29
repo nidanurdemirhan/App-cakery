@@ -27,7 +27,7 @@ public class ListActivity extends AppCompatActivity {
     private ArrayList<Recipe> recipeList = new ArrayList<>(); // recipe result(filter process like calorie )
     private SeekBar calorieSeekBar;
     private TextView seekBarValue;
-    private int selectedCalorieValue = 500;
+    private int selectedCalorieValue = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
