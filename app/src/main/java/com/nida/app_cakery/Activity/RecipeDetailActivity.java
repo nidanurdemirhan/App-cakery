@@ -41,28 +41,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
 
 
-        // Görünümleri bağla
         recipeName = findViewById(R.id.recipe_name);
         recipeDescription = findViewById(R.id.recipe_description);
         recipeCalories = findViewById(R.id.recipe_calories);
         recipePortion = findViewById(R.id.recipe_portion);
         recipeImage = findViewById(R.id.recipe_image);
 
-        // Firestore instance
         db = FirebaseFirestore.getInstance();
 
-        // Intent'ten Recipe ID'yi al
         recipeID = getIntent().getStringExtra("recipeID");
 
-        // Firestore'dan tarifi çek
         loadRecipeDetails();
     }
 
     private void loadRecipeDetails() {
-        // CakeryDomain sınıfından recipeList'i al
         ArrayList<Recipe> recipeList = CakeryDomain.getInstance().getAllRecipeList();
 
-        // recipeID'ye göre doğru reçeteyi bul
         Recipe loadedRecipe = null;
         for (Recipe recipe : recipeList) {
             if (recipe.getRecipeID().equals(recipeID)) {
@@ -71,7 +65,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         }
 
-        // Eğer reçete bulunduysa, detayları yükle
         if (loadedRecipe != null) {
             String name = loadedRecipe.getName();
             String description = loadedRecipe.getDescription();
@@ -81,14 +74,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
             recipeName.setText(name);
             recipeDescription.setText(description);
-            recipeCalories.setText("Kalori: " + calorie);
-            recipePortion.setText("Porsiyon: " + portion);
+            recipeCalories.setText("Calorie: " + calorie);
+            recipePortion.setText("Portion: " + portion);
 
             Glide.with(RecipeDetailActivity.this)
                     .load(imageUrl)
                     .into(recipeImage);
 
-            // Recipe'nin içindeki ingredientlerin listesini al
             loadIngredients(loadedRecipe);
         } else {
             Log.d("RecipeDetailActivity", "Recipe not found");
@@ -102,8 +94,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ArrayList<Double> ingredientsAmountList = new ArrayList<>();
         ArrayList<String> ingredientsUnitList = new ArrayList<>();
 
-        // Firebase'den alınan recipe'deki ingredientleri kullanarak ingredientInRecipeList'i doldur
-
         for (IngredientInRecipe ingredientInRecipe : ingredientInRecipeList) {
             String ingredientName = ingredientInRecipe.getIngredient().getName();
             double amount = ingredientInRecipe.getAmount();
@@ -113,7 +103,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             ingredientsUnitList.add(unit);
         }
 
-        // RecyclerView ve Adapter kurulumu
         RecyclerView ingredientsRecyclerView = findViewById(R.id.ingredients_recycler_view);
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         IngredientInRecipeAdapter ingredientAdapter = new IngredientInRecipeAdapter(ingredientInRecipeList);

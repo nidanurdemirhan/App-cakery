@@ -65,7 +65,6 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(FavoriteActivity.this, HomeActivity.class));
-                // Home butonu zaten HomeActivity'de olduğu için işlem yapmayabiliriz
             }
         });
 

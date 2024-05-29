@@ -98,9 +98,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void homeActivity() {
         ImageButton btnCart = findViewById(R.id.btnCart);
         ImageButton btnFav = findViewById(R.id.btnFavorites);
@@ -134,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Home butonu zaten HomeActivity'de olduğu için işlem yapmayabiliriz
+
             }
         });
 

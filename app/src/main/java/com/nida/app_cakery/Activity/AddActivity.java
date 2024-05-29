@@ -86,8 +86,7 @@ public class AddActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Home butonu zaten HomeActivity'de olduğu için işlem yapmayabiliriz
-                startActivity(new Intent(AddActivity.this, HomeActivity.class));
+                 startActivity(new Intent(AddActivity.this, HomeActivity.class));
 
             }
         });

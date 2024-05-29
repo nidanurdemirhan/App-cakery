@@ -117,7 +117,6 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ListActivity.this, HomeActivity.class));
-                // Home butonu zaten HomeActivity'de olduğu için işlem yapmayabiliriz
             }
         });
 
