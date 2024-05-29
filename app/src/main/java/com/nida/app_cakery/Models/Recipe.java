@@ -33,13 +33,29 @@ public class Recipe {
 
     }
     public Boolean isIngredientsAvailable(){
-        ArrayList<String> ingredientsInInventory = ((User)(CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
+       /*ArrayList<String> ingredientsInInventory = ((User)(CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
         for(int i = 0; i < ingredientInRecipe.size(); i++ ){
             if(!ingredientsInInventory.contains(ingredientInRecipe.get(i).getIngredient().getIngredientID())){
                 return false;
             }
         }
-        return true;
+        return true;*/
+
+        // %80 matching
+        int availableIngredientCount = 0;
+        ArrayList<String> ingredientsInInventory = ((User)(CakeryDomain.getInstance().getPerson())).getIngredientsInInventory();
+        for(int i = 0; i < ingredientInRecipe.size(); i++ ){
+            if(ingredientsInInventory.contains(ingredientInRecipe.get(i).getIngredient().getIngredientID())){
+                availableIngredientCount++;
+            }
+        }
+
+        if((ingredientInRecipe.size() != 0) && Math.floor((availableIngredientCount*100)/ingredientInRecipe.size())>79){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public String getName() {
         return name;
